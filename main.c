@@ -9,6 +9,7 @@ void    init_wolf(wolf_t *wolf)
     wolf->colorbuffer =  (uint32_t*)malloc(sizeof(uint32_t) * (uint32_t)WIDTH * (uint32_t)HEIGHT);
     //wolf->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_ABGR8888,
       //                              SDL_TEXTUREACCESS_STREAMING ,WIDTH, HEIGHT );
+    wolf->walltex = (uint32_t*) malloc(sizeof(uint32_t) * (uint32_t) tex_w * (uint32_t) tex_h);
 }
 
 void    init_player(player_t *player, wolf_t *wolf)
@@ -64,7 +65,6 @@ int main(int ac, char **av)
     init_player(&player, &wolf);
     (void)map;
     init_tab(rays);
-    tex(&wolf);
     while (wolf.loop)
     {
         process_input(&wolf, &player);

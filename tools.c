@@ -49,9 +49,6 @@ float   distancecalc(float x1, float y1, float x2, float y2)
 
 void    tex(wolf_t *wolf)
 {
-    wolf->walltex = (uint32_t*) malloc(sizeof(uint32_t) * (uint32_t) tex_w * (uint32_t) tex_h);
-    wolf->pngTex = upng_new_from_file("./pics/wood.png");
-    
     if (wolf->pngTex != NULL)
     {
         upng_decode(wolf->pngTex);
@@ -59,8 +56,5 @@ void    tex(wolf_t *wolf)
             wolf->walltex = (uint32_t *)upng_get_buffer(wolf->pngTex);
         
     }
-
-    int w = upng_get_width(wolf->pngTex);
-    int h = upng_get_height(wolf->pngTex);
-    printf("%d\n, %d\n", w, h);
 }
+

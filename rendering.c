@@ -109,13 +109,18 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
             wolf->colorbuffer[(WIDTH * j) + i] = 0xFFface87;
             j++;
         }
-
-        if (rays[i].hitver)
-            offX = (int)rays[i].wallhity % TILE_SIZE;
-        else
-            offX = (int)rays[i].wallhitx % TILE_SIZE;
-        
         j = wallTopPixel;
+        if (rays[i].hitver)
+        {
+            wolf->pngTex = upng_new_from_file("./pics/wood.png");
+            offX = (int)rays[i].wallhity % TILE_SIZE;
+        }
+        else
+        {
+            wolf->pngTex = upng_new_from_file("./pics/colorstone.png");
+            offX = (int)rays[i].wallhitx % TILE_SIZE;
+        }
+        tex(wolf);
         while (j < wallBottomPixel)
         {
             disFromTop = j + ((int)wallprojheight/2) - (HEIGHT / 2);
