@@ -53,7 +53,7 @@ void    tex(wolf_t *wolf)
     {
         upng_decode(wolf->pngTex);
         if (upng_get_error(wolf->pngTex) == UPNG_EOK)
-            wolf->walltex = (uint32_t *)upng_get_buffer(wolf->pngTex);
+            wolf->walltex = (int *)upng_get_buffer(wolf->pngTex);
         
     }
 }
@@ -69,5 +69,39 @@ void    imgs(wolf_t *wolf)
     wolf->pics[5] = ft_strdup("./pics/mossystone.png");
     wolf->pics[6] = ft_strdup("./pics/purplestone.png");
     wolf->pics[7] = ft_strdup("./pics/redbrick.png");
+}
+
+void    tex2(wolf_t *wolf, player_t *p)
+{
+    wolf->surface = IMG_Load(wolf->pics[1]);
+    p->colorbuffertexture = SDL_CreateTextureFromSurface(wolf->renderer, wolf->surface);
+    wolf->walltex = (int*)wolf->surface->pixels;
+    convert_data_img(wolf->walltex, tex_h * tex_w);
+}
+
+int				convert_color(int color)
+{
+	int r;
+	int g;
+	int b;
+	int a;
+
+	r = (color >> 16) & 255;
+	g = (color >> 8) & 255;
+	b = color & 255;
+	a = color & 255;
+	return ((r << 24) | (g << 16) | (b << 8) | 255);
+}
+
+void		convert_data_img(int *tab, int range)
+{
+	int i;
+
+	i = 0;
+	while (i < range)
+	{
+		tab[i] = convert_color(tab[i]);
+		i++;
+	}
 }
 

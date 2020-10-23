@@ -6,10 +6,10 @@ void    init_wolf(wolf_t *wolf)
     wolf->renderer = NULL;
     wolf->loop = 0;
     wolf->tickslastframe = 0;
-    wolf->colorbuffer =  (uint32_t*)malloc(sizeof(uint32_t) * (uint32_t)WIDTH * (uint32_t)HEIGHT);
+    wolf->colorbuffer =  (int*)malloc(sizeof(int) * (int)WIDTH * (int)HEIGHT);
     //wolf->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_ABGR8888,
       //                              SDL_TEXTUREACCESS_STREAMING ,WIDTH, HEIGHT );
-    wolf->walltex = (uint32_t*) malloc(sizeof(uint32_t) * (uint32_t) tex_w * (uint32_t) tex_h);
+    wolf->walltex = (int*) malloc(sizeof(int) * (int) tex_w * (int) tex_h);
 }
 
 void    init_player(player_t *player, wolf_t *wolf)
@@ -23,7 +23,7 @@ void    init_player(player_t *player, wolf_t *wolf)
     player->rotatangle = PI;
     player->walkspeed = 100;
     player->turnspeed = 70 * (PI / 180);
-    player->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_RGBA32,
+    player->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_RGBA8888,
                                     SDL_TEXTUREACCESS_STREAMING ,WIDTH, HEIGHT );
     
 }
@@ -62,10 +62,11 @@ int main(int ac, char **av)
     }
     init_wolf(&wolf);
     wolf.loop = init_window(&wolf);
-    init_player(&player, &wolf);
     imgs(&wolf);
-    (void)map;
     init_tab(rays);
+    tex2(&wolf, &player);
+    init_player(&player, &wolf);
+    (void)map;
     while (wolf.loop)
     {
         process_input(&wolf, &player);

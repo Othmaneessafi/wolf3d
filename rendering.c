@@ -57,7 +57,7 @@ void    renderays(ray_t *rays, wolf_t *wolf, player_t *player)
     }
 }
 
-void    clearcolorbuffer(Uint32 *buffer, Uint32 color)
+void    clearcolorbuffer(int *buffer, int color)
 {
     int i;
     int j;
@@ -78,7 +78,7 @@ void    clearcolorbuffer(Uint32 *buffer, Uint32 color)
 void    rendercolorbuffer(player_t *p, wolf_t *wolf)
 {
     SDL_UpdateTexture(p->colorbuffertexture, NULL, wolf->colorbuffer,
-                    (int)(Uint32)WIDTH * sizeof(Uint32));
+                    (int)(int)WIDTH * sizeof(int));
     SDL_RenderCopy(wolf->renderer, p->colorbuffertexture, NULL, NULL);
 }
 
@@ -106,21 +106,19 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
         j = 0;
         while (j < wallTopPixel)
         {
-            wolf->colorbuffer[(WIDTH * j) + i] = 0xFFface87;
+            wolf->colorbuffer[(WIDTH * j) + i] = 0x87cefa;
             j++;
         }
         j = wallTopPixel;
         if (rays[i].hitver)
         {
-            wolf->pngTex = upng_new_from_file(wolf->pics[0]);
             offX = (int)rays[i].wallhity % TILE_SIZE;
         }
         else
         {
-            wolf->pngTex = upng_new_from_file(wolf->pics[1]);
             offX = (int)rays[i].wallhitx % TILE_SIZE;
         }
-        tex(wolf);
+        
         while (j < wallBottomPixel)
         {
             disFromTop = j + ((int)wallprojheight/2) - (HEIGHT / 2);
@@ -133,7 +131,7 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
         j = wallBottomPixel;
         while (j < HEIGHT)
         {
-            wolf->colorbuffer[(WIDTH * j) + i] = 0xFF777777;
+            wolf->colorbuffer[(WIDTH * j) + i] = 0xFF8B4513;
             j++;
         }
         i++;

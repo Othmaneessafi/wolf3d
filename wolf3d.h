@@ -48,10 +48,12 @@ typedef struct      wolf_s
 {
     SDL_Window      *window;
     SDL_Renderer    *renderer;
+    SDL_Surface     *surface;
+    SDL_Texture     *text;
     int             loop;
     float           tickslastframe;
-    uint32_t*       colorbuffer;
-    uint32_t*       walltex;
+    int*       colorbuffer;
+    int*       walltex;
     upng_t*         pngTex;
     char            **pics;
     //SDL_Texture     *colorbuffertexture;
@@ -110,6 +112,9 @@ int     mapwall(int **map, float x, float y);
 void    castallrays(player_t *player, int **map, ray_t *ray);//[NUM_RAY]);
 int     **ft_check(int ac, char **av);
 void    tex(wolf_t *wolf);
+void    tex2(wolf_t *wolf, player_t *p);
 void    imgs(wolf_t *wolf);
+int		convert_color(int color);
+void	convert_data_img(int *tab, int range);
 
 #endif
