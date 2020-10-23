@@ -112,12 +112,12 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
         j = wallTopPixel;
         if (rays[i].hitver)
         {
-            wolf->pngTex = upng_new_from_file("./pics/wood.png");
+            wolf->pngTex = upng_new_from_file(wolf->pics[0]);
             offX = (int)rays[i].wallhity % TILE_SIZE;
         }
         else
         {
-            wolf->pngTex = upng_new_from_file("./pics/colorstone.png");
+            wolf->pngTex = upng_new_from_file(wolf->pics[1]);
             offX = (int)rays[i].wallhitx % TILE_SIZE;
         }
         tex(wolf);

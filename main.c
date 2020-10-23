@@ -63,6 +63,7 @@ int main(int ac, char **av)
     init_wolf(&wolf);
     wolf.loop = init_window(&wolf);
     init_player(&player, &wolf);
+    imgs(&wolf);
     (void)map;
     init_tab(rays);
     while (wolf.loop)

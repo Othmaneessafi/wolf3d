@@ -53,6 +53,7 @@ typedef struct      wolf_s
     uint32_t*       colorbuffer;
     uint32_t*       walltex;
     upng_t*         pngTex;
+    char            **pics;
     //SDL_Texture     *colorbuffertexture;
 
 }                   wolf_t;
@@ -109,5 +110,6 @@ int     mapwall(int **map, float x, float y);
 void    castallrays(player_t *player, int **map, ray_t *ray);//[NUM_RAY]);
 int     **ft_check(int ac, char **av);
 void    tex(wolf_t *wolf);
+void    imgs(wolf_t *wolf);
 
 #endif

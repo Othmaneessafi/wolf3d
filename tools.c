@@ -58,3 +58,16 @@ void    tex(wolf_t *wolf)
     }
 }
 
+void    imgs(wolf_t *wolf)
+{
+    wolf->pics = (char **)malloc(sizeof(char *) * 8);
+    wolf->pics[0] = ft_strdup("./pics/wood.png");
+    wolf->pics[1] = ft_strdup("./pics/colorstone.png");
+    wolf->pics[2] = ft_strdup("./pics/eagle.png");
+    wolf->pics[3] = ft_strdup("./pics/bluestone.png");
+    wolf->pics[4] = ft_strdup("./pics/graystone.png");
+    wolf->pics[5] = ft_strdup("./pics/mossystone.png");
+    wolf->pics[6] = ft_strdup("./pics/purplestone.png");
+    wolf->pics[7] = ft_strdup("./pics/redbrick.png");
+}
+
