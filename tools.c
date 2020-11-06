@@ -25,7 +25,7 @@ int   init_window(wolf_t *wolf)
 
 void    destroy_window(wolf_t *wolf)
 {
-    free(wolf->walltex);
+    //free(wolf->walltex);
     free (wolf->colorbuffer);
     SDL_DestroyRenderer(wolf->renderer);
     SDL_DestroyWindow(wolf->window);
@@ -60,7 +60,7 @@ void    tex(wolf_t *wolf)
 
 void    imgs(wolf_t *wolf)
 {
-    wolf->pics = (char **)malloc(sizeof(char *) * 8);
+    wolf->pics = (char **)malloc(sizeof(char *) * 9);
     wolf->pics[0] = ft_strdup("./pics/wood.png");
     wolf->pics[1] = ft_strdup("./pics/colorstone.png");
     wolf->pics[2] = ft_strdup("./pics/eagle.png");
@@ -69,39 +69,52 @@ void    imgs(wolf_t *wolf)
     wolf->pics[5] = ft_strdup("./pics/mossystone.png");
     wolf->pics[6] = ft_strdup("./pics/purplestone.png");
     wolf->pics[7] = ft_strdup("./pics/redbrick.png");
+    wolf->pics[8] = ft_strdup("./pics/brick.png");
 }
 
 void    tex2(wolf_t *wolf, player_t *p)
 {
-    wolf->surface = IMG_Load(wolf->pics[1]);
-    p->colorbuffertexture = SDL_CreateTextureFromSurface(wolf->renderer, wolf->surface);
+    (void)p;
+    wolf->walltex = (int *) malloc(sizeof(int) * tex_w * tex_h);
+    wolf->surface = IMG_Load(wolf->pics[0]);
     wolf->walltex = (int*)wolf->surface->pixels;
-    convert_data_img(wolf->walltex, tex_h * tex_w);
+    
+    wolf->walltex1= (int *) malloc(sizeof(int) * tex_w * tex_h);
+    wolf->surface = IMG_Load(wolf->pics[1]);
+    wolf->walltex1 = (int*)wolf->surface->pixels;
+
+    wolf->walltex2 = (int *) malloc(sizeof(int) * tex_w * tex_h);
+    wolf->surface = IMG_Load(wolf->pics[2]);
+    wolf->walltex2 = (int*)wolf->surface->pixels;
+
+    wolf->walltex3 = (int *) malloc(sizeof(int) * tex_w * tex_h);
+    wolf->surface = IMG_Load(wolf->pics[3]);
+    wolf->walltex3 = (int*)wolf->surface->pixels;
+
+    wolf->walltex4 = (int *) malloc(sizeof(int) * tex_w * tex_h);
+    wolf->surface = IMG_Load(wolf->pics[5]);
+    wolf->walltex4 = (int*)wolf->surface->pixels;
 }
 
-int				convert_color(int color)
+void    gun(wolf_t *wolf, player_t *p)
 {
-	int r;
-	int g;
-	int b;
-	int a;
+    SDL_Rect rect;
+    SDL_Rect rectpos;
 
-	r = (color >> 16) & 255;
-	g = (color >> 8) & 255;
-	b = color & 255;
-	a = color & 255;
-	return ((r << 24) | (g << 16) | (b << 8) | 255);
+    rect.x = 0;
+    rect.y = 0;
+    rect.h = 100;
+    rect.w = 500 / 5;
+
+    rectpos.x = 100;
+    rectpos.y = 100;
+    rectpos.h = 100;
+    rectpos.w = 500 / 5;
+
+
+            wolf->surface = IMG_Load(wolf->pics[8]);
+            p->colorbuffertexture = SDL_CreateTextureFromSurface(wolf->renderer, wolf->surface);
+            //SDL_RenderCopy(wolf->renderer, p->colorbuffertexture, &rect, &rectpos);
+           // SDL_RenderPresent(wolf->renderer);
+
 }
-
-void		convert_data_img(int *tab, int range)
-{
-	int i;
-
-	i = 0;
-	while (i < range)
-	{
-		tab[i] = convert_color(tab[i]);
-		i++;
-	}
-}
-

@@ -52,10 +52,15 @@ typedef struct      wolf_s
     SDL_Texture     *text;
     int             loop;
     float           tickslastframe;
-    int*       colorbuffer;
-    int*       walltex;
+    int*            colorbuffer;
+    int*            walltex;
+    int*            walltex1;
+    int*            walltex2;
+    int*            walltex3;
+    int*            walltex4;
     upng_t*         pngTex;
     char            **pics;
+    char            *img;
     //SDL_Texture     *colorbuffertexture;
 
 }                   wolf_t;
@@ -97,8 +102,22 @@ typedef struct      results_s
     int     foundhit;
     float   wallhitx;
     float   wallhity;
-    int     content;  
+    int     content;
+
 }                   results_t;
+
+typedef struct      texture_s 
+{
+    unsigned int    color;
+    float           ratio;
+    int             yend;
+    int             xend;
+    int             diagonaldistance;
+    int             cellx;
+    int             celly;
+    int             tilerow;
+    int             tilecol;
+}                   texture_t;
 
 
 int     init_window(wolf_t *wolf);
@@ -114,7 +133,6 @@ int     **ft_check(int ac, char **av);
 void    tex(wolf_t *wolf);
 void    tex2(wolf_t *wolf, player_t *p);
 void    imgs(wolf_t *wolf);
-int		convert_color(int color);
-void	convert_data_img(int *tab, int range);
+void    gun(wolf_t *wolf, player_t *p);
 
 #endif

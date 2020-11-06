@@ -17,13 +17,13 @@ void    init_player(player_t *player, wolf_t *wolf)
     player->x = WIDTH / 2;
     player->y = HEIGHT / 2;
     player->width = 2;
-    player->height = 2;
+    player->height = 32;
     player->turndirection = 0;
     player->walkdirection = 0;
     player->rotatangle = PI;
     player->walkspeed = 100;
     player->turnspeed = 70 * (PI / 180);
-    player->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_RGBA8888,
+    player->colorbuffertexture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_ARGB8888,
                                     SDL_TEXTUREACCESS_STREAMING ,WIDTH, HEIGHT );
     
 }
@@ -64,6 +64,7 @@ int main(int ac, char **av)
     wolf.loop = init_window(&wolf);
     imgs(&wolf);
     init_tab(rays);
+    //gun(&wolf, &player);
     tex2(&wolf, &player);
     init_player(&player, &wolf);
     (void)map;

@@ -90,14 +90,19 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
     int offX;
     int offY;
     int disFromTop;
+    int *walltexture;
     i = 0;
+    int centerY = HEIGHT / 2;
+    // int py = 0, px = 0;
     while(i < NUM_RAY)
     {
         float   perpdistance = rays[i].distance * cos(rays[i].rayangle - player->rotatangle);
         float   distprojplane = (WIDTH / 2) / tan(FOVA / 2);
         float   wallprojheight = (TILE_SIZE / perpdistance) * distprojplane;
-
-
+        texture_t ceiling;
+        texture_t wall;
+        texture_t flor;
+        
         int     wallTopPixel = (HEIGHT / 2) - ((int)wallprojheight / 2);
         wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
 
@@ -106,16 +111,36 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
         j = 0;
         while (j < wallTopPixel)
         {
-            wolf->colorbuffer[(WIDTH * j) + i] = 0x87cefa;
+            ceiling.ratio = (TILE_SIZE - player->height) / (centerY - j);
+            ceiling.diagonaldistance = floor((distprojplane * ceiling.ratio) / cos(rays[i].rayangle - player->rotatangle));
+
+            ceiling.yend = floor(ceiling.diagonaldistance * sin(rays[i].rayangle));
+            ceiling.xend = floor(ceiling.diagonaldistance * cos(rays[i].rayangle));
+
+            ceiling.xend += player->x;
+            ceiling.yend += player->y;
+
+            ceiling.cellx = floor(ceiling.xend / TILE_SIZE);
+            ceiling.celly = floor(ceiling.yend / TILE_SIZE);
+            if (ceiling.cellx < COLS && ceiling.celly < ROWS && ceiling.cellx >= 0 && ceiling.celly >= 0)
+            {
+
+                ceiling.tilerow = floor(ceiling.xend % TILE_SIZE);
+                ceiling.tilecol = floor(ceiling.yend % TILE_SIZE);
+                ceiling.color = wolf->walltex2[(tex_w * ceiling.tilecol) + ceiling.tilerow];
+                wolf->colorbuffer[(WIDTH * j) + i] = ceiling.color;
+            }
             j++;
         }
         j = wallTopPixel;
         if (rays[i].hitver)
         {
+            walltexture = wolf->walltex;
             offX = (int)rays[i].wallhity % TILE_SIZE;
         }
         else
         {
+            walltexture = wolf->walltex1;
             offX = (int)rays[i].wallhitx % TILE_SIZE;
         }
         
@@ -123,15 +148,33 @@ void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
         {
             disFromTop = j + ((int)wallprojheight/2) - (HEIGHT / 2);
             offY = disFromTop * ((float)tex_h / wallprojheight);
-            unsigned int texClr = wolf->walltex[(tex_w * offY) + offX];
-            wolf->colorbuffer[(WIDTH * j) + i] = texClr;
+            wall.color = walltexture[(tex_w * offY) + offX];
+            wolf->colorbuffer[(WIDTH * j) + i] = wall.color;
             j++;
         }
-
+        
         j = wallBottomPixel;
         while (j < HEIGHT)
         {
-            wolf->colorbuffer[(WIDTH * j) + i] = 0xFF8B4513;
+            flor.ratio = player->height / (j - centerY);
+            flor.diagonaldistance = floor((distprojplane * flor.ratio) / cos(rays[i].rayangle - player->rotatangle));
+
+            flor.yend = floor(flor.diagonaldistance * sin(rays[i].rayangle));
+            flor.xend = floor(flor.diagonaldistance * cos(rays[i].rayangle));
+
+            flor.yend += player->x;
+            flor.xend += player->y;
+
+             int cellX = floor(flor.xend / TILE_SIZE);
+             int cellY = floor(flor.yend / TILE_SIZE);
+             if (cellX < COLS && cellY < ROWS && cellX >= 0 && cellY >= 0)
+             {
+
+                int tilerow = floor(flor.xend % TILE_SIZE);
+                int tilecol = floor(flor.yend % TILE_SIZE);
+                flor.color = wolf->walltex4[(tex_w * tilecol) + tilerow];
+                wolf->colorbuffer[(WIDTH * j) + i] = flor.color;
+             }
             j++;
         }
         i++;

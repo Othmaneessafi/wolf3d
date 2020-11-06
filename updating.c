@@ -17,7 +17,6 @@ void    playermove(int **map, float deltatime, player_t *player)
     float   movestep;
     float   newx;
     float   newy;
-
     player->rotatangle += player->turndirection *
                 player->turnspeed * deltatime;
     movestep = player->walkdirection * player->walkspeed *
