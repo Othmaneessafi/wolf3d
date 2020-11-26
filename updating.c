@@ -1,53 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   updating.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cnaour <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 04:57:42 by cnaour            #+#    #+#             */
+/*   Updated: 2020/10/18 05:07:26 by cnaour           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-int     mapwall(int **map, float x, float y)
+int			mapwall(int **map, float x, float y)
 {
-    int mapequx;
-    int mapequy;
+	int		mapequx;
+	int		mapequy;
 
-    if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
-        return(TRUE);
-    mapequx = floor(x / TILE_SIZE);
-    mapequy = floor(y / TILE_SIZE);
-    return(map[mapequy][mapequx] != 0);
+	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
+		return (TRUE);
+	mapequx = floor(x / TILE_SIZE);
+	mapequy = floor(y / TILE_SIZE);
+	return (map[mapequy][mapequx] != 0);
 }
 
-void    playermove(int **map, float deltatime, player_t *player)
+void		playermove(int **map, float deltatime, t_player *player)
 {
-    float   movestep;
-    float   newx;
-    float   newy;
-    player->rotatangle += player->turndirection *
-                player->turnspeed * deltatime;
-    movestep = player->walkdirection * player->walkspeed *
-                deltatime;
-    newx = player->x + movestep * cos(player->rotatangle);
-    newy = player->y + movestep * sin(player->rotatangle);
-    if(!mapwall(map, newx, newy))
-    {
-        player->x = newx;
-        player->y = newy;
+	float	movestep;
+	float	newx;
+	float	newy;
 
-    }
+	player->rotatangle += player->turndirection *
+		player->turnspeed * deltatime;
+	movestep = player->walkdirection * player->walkspeed *
+		deltatime;
+	newx = round(player->x + movestep * cos(player->rotatangle));
+	newy = round(player->y + movestep * sin(player->rotatangle));
+	if (!mapwall(map, newx, newy))
+	{
+		player->x = (float)newx;
+		player->y = (float)newy;
+		//printf("%f, %f\n", newx, newy);
+	}
 }
 
-void    update(int **map, float *ticks, player_t *player, ray_t rays[NUM_RAY])
+void		update(int **map, float *ticks, t_player *player, t_ray *rays)
 {
-    //int i = 0;
+	float	deltatime;
+	float	t;
 
-    while(!SDL_TICKS_PASSED(SDL_GetTicks(), *ticks + FRAME_TIME));
-    float   deltatime = (SDL_GetTicks() - *ticks) / 1000.0f;
-    *ticks = SDL_GetTicks();
-    playermove(map, deltatime, player);
-    //(void)rays;
-    //printf("dkhal");
-    castallrays(player, map, rays);
-    //printf("khrj");
-    /*while (i < NUM_RAY)
-    {
-        printf("%f\n", rays[i].distance);
-        i++;
-    }*/
-    //update geme objects delta
+	t = SDL_GetTicks();
+	while (!SDL_TICKS_PASSED(t, *ticks + FRAME_TIME))
+	{
+		t = SDL_GetTicks();
+	}
+	deltatime = (SDL_GetTicks() - *ticks) / 1000.0f;
+	*ticks = SDL_GetTicks();
+	playermove(map, deltatime, player);
+	castallrays(player, map, rays);
 }
-

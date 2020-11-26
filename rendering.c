@@ -1,196 +1,83 @@
-# include "wolf3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rendering.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cnaour <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/18 04:50:13 by cnaour            #+#    #+#             */
+/*   Updated: 2020/10/18 04:55:54 by cnaour           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    rendermap(int **map, wolf_t *wolf)
+#include "wolf3d.h"
+
+void		rendermap(int **map, t_wolf *wolf)
 {
-    int i;
-    int j;
-    int tilex;
-    int tiley;
-    int tilecolor;
-    SDL_Rect maprect;
+	int			i;
+	int			j;
+	t_cords		tile;
+	int			tilecolor;
+	SDL_Rect	maprect;
 
-    i = 0;
-    while (i < ROWS)
-    {
-        j = 0;
-        while (j < COLS)
-        {
-            tilex = j * TILE_SIZE;
-            tiley = i * TILE_SIZE;
-            tilecolor = map[i][j] != 0 ? 255 : 0;
-            SDL_SetRenderDrawColor(wolf->renderer, tilecolor,
-                        tilecolor, tilecolor, 255);
-            maprect = (SDL_Rect){MM_SCALE * tilex, MM_SCALE * tiley,
-                        MM_SCALE * TILE_SIZE,MM_SCALE * TILE_SIZE};
-            SDL_RenderFillRect(wolf->renderer, &maprect);
-            j++;
-        }
-        i++;
-    }
-
+	i = 0;
+	while (i < ROWS)
+	{
+		j = 0;
+		while (j < COLS)
+		{
+			tile.x = j * TILE_SIZE;
+			tile.y = i * TILE_SIZE;
+			tilecolor = map[i][j] != 0 ? 255 : 0;
+			SDL_SetRenderDrawColor(wolf->renderer, tilecolor,
+					tilecolor, tilecolor, 255);
+			maprect = (SDL_Rect){MM_SCALE * tile.x, MM_SCALE * tile.y,
+				MM_SCALE * TILE_SIZE, MM_SCALE * TILE_SIZE};
+			SDL_RenderFillRect(wolf->renderer, &maprect);
+			j++;
+		}
+		i++;
+	}
 }
 
-void    renderplayer(player_t *player, wolf_t *wolf)
+void		renderplayer(t_player *player, t_wolf *wolf)
 {
-    SDL_Rect p_rect;
+	SDL_Rect	p_rect;
 
-    SDL_SetRenderDrawColor(wolf->renderer, 255, 0, 0, 255);
-    p_rect = (SDL_Rect){MM_SCALE * player->x, MM_SCALE * player->y,
-                MM_SCALE * player->width, MM_SCALE * player->height};
-    SDL_RenderFillRect(wolf->renderer, &p_rect);
-    SDL_RenderDrawLine(wolf->renderer, MM_SCALE * player->x, MM_SCALE * player->y,
-                    MM_SCALE * (player->x + cos(player->rotatangle) * 40),
-                    MM_SCALE * (player->y + sin(player->rotatangle) * 40));
+	SDL_SetRenderDrawColor(wolf->renderer, 255, 0, 0, 255);
+	p_rect = (SDL_Rect){MM_SCALE * player->x, MM_SCALE * player->y,
+		MM_SCALE * player->width, MM_SCALE * player->height};
+	SDL_RenderFillRect(wolf->renderer, &p_rect);
+	SDL_RenderDrawLine(wolf->renderer, MM_SCALE * player->x, MM_SCALE *
+			player->y, MM_SCALE * (player->x + cos(player->rotatangle) * 40),
+			MM_SCALE * (player->y + sin(player->rotatangle) * 40));
 }
 
-void    renderays(ray_t *rays, wolf_t *wolf, player_t *player)
+void		renderays(t_ray *rays, t_wolf *wolf, t_player *player)
 {
-    int i = 0;
-    SDL_SetRenderDrawColor(wolf->renderer, 255, 0, 0, 255);
-    //loat rayangle = player->rotatangle - (FOVA / 2);
-    while(i < NUM_RAY)
-    {
-        (void)rays;
-        SDL_RenderDrawLine(wolf->renderer, MM_SCALE * player->x, MM_SCALE * player->y,
-                MM_SCALE * rays[i].wallhitx, MM_SCALE * rays[i].wallhity);
-        i++;
-    }
+	int		i;
+
+	i = 0;
+	SDL_SetRenderDrawColor(wolf->renderer, 255, 0, 0, 255);
+	while (i < NUM_RAY)
+	{
+		SDL_RenderDrawLine(wolf->renderer, MM_SCALE * player->x,
+				MM_SCALE * player->y,
+				MM_SCALE * rays[i].wallhitx,
+				MM_SCALE * rays[i].wallhity);
+		i++;
+	}
 }
 
-void    clearcolorbuffer(int *buffer, int color)
+void		render(t_wolf *wolf, t_player *player, int **map, t_ray *rays)
 {
-    int i;
-    int j;
-
-    i = 0;
-    while (i < WIDTH)
-    {
-        j = 0;
-        while (j < HEIGHT)
-        {
-            buffer[(WIDTH * j) + i] = color;
-            j++;
-        }
-        i++;
-    }
-}
-
-void    rendercolorbuffer(player_t *p, wolf_t *wolf)
-{
-    SDL_UpdateTexture(p->colorbuffertexture, NULL, wolf->colorbuffer,
-                    (int)(int)WIDTH * sizeof(int));
-    SDL_RenderCopy(wolf->renderer, p->colorbuffertexture, NULL, NULL);
-}
-
-
-void    generate3dprojection(ray_t *rays, player_t *player, wolf_t *wolf)
-{
-    int i;
-    int j;
-    int offX;
-    int offY;
-    int disFromTop;
-    int *walltexture;
-    i = 0;
-    int centerY = HEIGHT / 2;
-    // int py = 0, px = 0;
-    while(i < NUM_RAY)
-    {
-        float   perpdistance = rays[i].distance * cos(rays[i].rayangle - player->rotatangle);
-        float   distprojplane = (WIDTH / 2) / tan(FOVA / 2);
-        float   wallprojheight = (TILE_SIZE / perpdistance) * distprojplane;
-        texture_t ceiling;
-        texture_t wall;
-        texture_t flor;
-        
-        int     wallTopPixel = (HEIGHT / 2) - ((int)wallprojheight / 2);
-        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
-
-        int wallBottomPixel = (HEIGHT / 2) + ((int)wallprojheight / 2);
-        wallBottomPixel = wallBottomPixel > HEIGHT ? HEIGHT : wallBottomPixel;
-        j = 0;
-        while (j < wallTopPixel)
-        {
-            ceiling.ratio = (TILE_SIZE - player->height) / (centerY - j);
-            ceiling.diagonaldistance = floor((distprojplane * ceiling.ratio) / cos(rays[i].rayangle - player->rotatangle));
-
-            ceiling.yend = floor(ceiling.diagonaldistance * sin(rays[i].rayangle));
-            ceiling.xend = floor(ceiling.diagonaldistance * cos(rays[i].rayangle));
-
-            ceiling.xend += player->x;
-            ceiling.yend += player->y;
-
-            ceiling.cellx = floor(ceiling.xend / TILE_SIZE);
-            ceiling.celly = floor(ceiling.yend / TILE_SIZE);
-            if (ceiling.cellx < COLS && ceiling.celly < ROWS && ceiling.cellx >= 0 && ceiling.celly >= 0)
-            {
-
-                ceiling.tilerow = floor(ceiling.xend % TILE_SIZE);
-                ceiling.tilecol = floor(ceiling.yend % TILE_SIZE);
-                ceiling.color = wolf->walltex2[(tex_w * ceiling.tilecol) + ceiling.tilerow];
-                wolf->colorbuffer[(WIDTH * j) + i] = ceiling.color;
-            }
-            j++;
-        }
-        j = wallTopPixel;
-        if (rays[i].hitver)
-        {
-            walltexture = wolf->walltex;
-            offX = (int)rays[i].wallhity % TILE_SIZE;
-        }
-        else
-        {
-            walltexture = wolf->walltex1;
-            offX = (int)rays[i].wallhitx % TILE_SIZE;
-        }
-        
-        while (j < wallBottomPixel)
-        {
-            disFromTop = j + ((int)wallprojheight/2) - (HEIGHT / 2);
-            offY = disFromTop * ((float)tex_h / wallprojheight);
-            wall.color = walltexture[(tex_w * offY) + offX];
-            wolf->colorbuffer[(WIDTH * j) + i] = wall.color;
-            j++;
-        }
-        
-        j = wallBottomPixel;
-        while (j < HEIGHT)
-        {
-            flor.ratio = player->height / (j - centerY);
-            flor.diagonaldistance = floor((distprojplane * flor.ratio) / cos(rays[i].rayangle - player->rotatangle));
-
-            flor.yend = floor(flor.diagonaldistance * sin(rays[i].rayangle));
-            flor.xend = floor(flor.diagonaldistance * cos(rays[i].rayangle));
-
-            flor.yend += player->x;
-            flor.xend += player->y;
-
-             int cellX = floor(flor.xend / TILE_SIZE);
-             int cellY = floor(flor.yend / TILE_SIZE);
-             if (cellX < COLS && cellY < ROWS && cellX >= 0 && cellY >= 0)
-             {
-
-                int tilerow = floor(flor.xend % TILE_SIZE);
-                int tilecol = floor(flor.yend % TILE_SIZE);
-                flor.color = wolf->walltex4[(tex_w * tilecol) + tilerow];
-                wolf->colorbuffer[(WIDTH * j) + i] = flor.color;
-             }
-            j++;
-        }
-        i++;
-    }
-}
-
-void    render(wolf_t   *wolf, player_t *player, int **map, ray_t *rays)//[NUM_RAY])
-{
-    SDL_SetRenderDrawColor(wolf->renderer, 0, 0, 0, 255);
-    SDL_RenderClear(wolf->renderer);
-
-    generate3dprojection(rays, player, wolf);
-    rendercolorbuffer(player, wolf);
-    clearcolorbuffer(wolf->colorbuffer, 0xFF000000);
-    rendermap(map, wolf);
-    renderays(rays, wolf, player);
-    renderplayer(player, wolf);
-    SDL_RenderPresent(wolf->renderer);
+	SDL_SetRenderDrawColor(wolf->renderer, 0, 0, 0, 255);
+	SDL_RenderClear(wolf->renderer);
+	generate3dprojection(rays, player, wolf);
+	rendercolorbuffer(player, wolf);
+	clearcolorbuffer(wolf->colorbuffer, 0xFF000000);
+	rendermap(map, wolf);
+	renderays(rays, wolf, player);
+	renderplayer(player, wolf);
+	SDL_RenderPresent(wolf->renderer);
 }

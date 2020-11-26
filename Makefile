@@ -17,7 +17,7 @@ SRC = main.c process_input.c rendering.c updating.c tools.c\
 		Get_Next_Line/libft/ft_strnew.c \
 		Get_Next_Line/libft/ft_strlen.c \
 		Get_Next_Line/libft/ft_atoi.c \
-		Get_Next_Line/get_next_line.c libpng/upng.c
+		Get_Next_Line/get_next_line.c projection3d.c raycasting2.c
 
 FRAM =  -framework SDL2 -F ./SDL/ -framework SDL2_mixer -F ./SDL  -framework SDL2_image -F ./SDL -rpath @loader_path/SDL -lz
 
@@ -25,7 +25,9 @@ OBJ = $(SRC:.c=.o)
 
 F_OBJ = ./OBJ
 
-all: $(NAME) 
+all: $(NAME)
+%.o : %.c $(INC)
+	$(CC) $(CFLAGS)$(OBJ) $(LIB) $(FRAM) -o $(NAME) -c -o $@ $<
 $(NAME):$(OBJ)
 		@echo "\033[2;36m"
 		@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(FRAM) -o $(NAME)
