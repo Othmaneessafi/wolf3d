@@ -37,6 +37,36 @@ void		rendercolorbuffer(t_player *p, t_wolf *wolf)
 	SDL_RenderCopy(wolf->renderer, p->colorbuffertexture, NULL, NULL);
 }
 
+int			get_color(int color, double dist)
+{
+	int r;
+	int g;
+	int b;
+
+	r = ((color >> 16) & 255);
+	g = ((color >> 8) & 255);
+	b = (color & 255);
+	r = (r * (1.0 - dist / 4) > 0.0) ? r * (1.0 - dist / 4) : 0;
+	g = (g * (1.0 - dist / 4) > 0.0) ? g * (1.0 - dist / 4) : 0;
+	b = (b * (1.0 - dist / 4) > 0.0) ? b * (1.0 - dist / 4) : 0;
+	return ((r << 16) | (g << 8) | b);
+}
+
+int			get_color2(int color, double dist)
+{
+	int r;
+	int g;
+	int b;
+
+	r = ((color >> 16) & 255);
+	g = ((color >> 8) & 255);
+	b = (color & 255) ;
+	r = (r * dist > 0.0) ? r * dist : 0;
+	g = (g * dist > 0.0) ? g * dist : 0;
+	b = (b * dist > 0.0) ? b * dist : 0;
+	return ((r << 16) | (g << 8) | b);
+}
+
 void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_projection *proj, t_player *p)
 {
 	int		j;
@@ -44,9 +74,11 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 	t_texture	flor;
 	t_texture   ceil;
 	int disFromTop;
+	int *color;
+	int color1;
+	//float bright = 100/flor.diago_distance;
 
 	j = 0;
-	//printf("%f === %f\n", walltopandbottom.x, rays[i].distance);
 	while (j < walltopandbottom.x)
 	{
 		
@@ -66,22 +98,46 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 			//if (flor.cellx == 7 && flor.celly == 8)
 				//flor.color = wolf->walltex1[(TEX_W * flor.tilerow) + flor.tilecol];
 			//else
-			ceil.color = wolf->walltex1[(TEX_W * ceil.tilerow) + ceil.tilecol];
-			wolf->colorbuffer[(WIDTH * j) + i] = ceil.color;
+			//printf("ok1\n");
+			double bright = HEIGHT / (2.0 * j - HEIGHT);
+			ceil.color = wolf->walltex[5][(TEX_W * ceil.tilerow) + ceil.tilecol];
+			color1 = get_color(ceil.color, -1.0 * bright);
+			wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		}
 		j++;
 	}
+	double light;
 	j = walltopandbottom.x;
 	if (rays[i].hitver)
-         wall.offx = (int)rays[i].wallhity % TILE_SIZE;
+	{
+		light = 180/rays[i].distance;
+		if (rays[i].rayright)
+			color = wolf->walltex[1];
+		else if (rays[i].rayleft)
+			color = wolf->walltex[3];
+        wall.offx = (int)rays[i].wallhity % TILE_SIZE;
+	}
     else
-        wall.offx = (int)rays[i].wallhitx % TILE_SIZE;
+	{
+		light = 170/rays[i].distance;
+		if (rays[i].rayup)
+			color = wolf->walltex[0];
+		else if (rays[i].raydown)
+			color = wolf->walltex[2];
+		wall.offx = (int)rays[i].wallhitx % TILE_SIZE;
+	}
+	if (light > 0.883948)
+		light = 0.883948;
+	//printf ("light %f\n", light);
 	while (j < walltopandbottom.y)
 	{
         disFromTop = j + ((int)proj->wallprojheight/2) - (HEIGHT / 2);
         wall.offy = disFromTop * ((float)TEX_H / proj->wallprojheight);
-        wall.color = wolf->walltex[(TEX_W * wall.offy) + wall.offx];
-        wolf->colorbuffer[(WIDTH * j) + i] = wall.color;
+		//double bright = HEIGHT / (2.0 * j - HEIGHT);
+		wall.color = color[(TEX_W * wall.offy) + wall.offx];
+		//printf("dist     %f\n", proj->perpdistance);
+		color1 = get_color2(wall.color, (light));
+        wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		j++;
 	}
 	j = walltopandbottom.y;
@@ -103,29 +159,14 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 			//if (flor.cellx == 7 && flor.celly == 8)
 				//flor.color = wolf->walltex1[(TEX_W * flor.tilerow) + flor.tilecol];
 			//else
-			flor.color = wolf->walltex2[(TEX_W * flor.tilerow) + flor.tilecol];
-			wolf->colorbuffer[(WIDTH * j) + i] = flor.color;
+			double bright = HEIGHT / (2.0 * j - HEIGHT);
+			flor.color = wolf->walltex[4][(TEX_W * flor.tilerow) + flor.tilecol];// * bright;
+			color1 = get_color(flor.color, bright);
+			wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		}
-		//wolf->colorbuffer[(WIDTH * j) + i] = 0xFF333333;
 		j++;
 	}
-}
-
-void    tex2(t_wolf *wolf)
-{
-	wolf->walltex = (int*) malloc(sizeof(int) * TEX_H * TEX_W);
-    wolf->surface = IMG_Load(wolf->pics[1]);
-    wolf->walltex = (int*)wolf->surface->pixels;
-	
-	wolf->walltex1 = (int*) malloc(sizeof(int) * TEX_H * TEX_W);
-    wolf->surface = IMG_Load(wolf->pics[5]);
-    wolf->walltex1 = (int*)wolf->surface->pixels;
-
-	wolf->walltex2 = (int*) malloc(sizeof(int) * TEX_H * TEX_W);
-    wolf->surface = IMG_Load(wolf->pics[7]);
-    wolf->walltex2 = (int*)wolf->surface->pixels;
-
-}		
+}	
 
 void		generate3dprojection(t_ray *rays, t_player *player, t_wolf *wolf)
 {

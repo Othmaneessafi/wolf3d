@@ -40,6 +40,8 @@
 # include <stdio.h>
 # include "SDL/SDL2.framework/Headers/SDL.h"
 # include "SDL/SDL2_image.framework/Headers/SDL_image.h"
+//# include "SDL2_mixer.framework/Headers/SDL_mixer.h"
+//# include "SDL2_mixer-2.0.4/SDL_mixer.h"
 # include <stdio.h>
 # include <limits.h>
 # include <fcntl.h>
@@ -57,9 +59,7 @@ typedef struct			s_wolf
 	int				*colorbuffer;
 	int				**map;
 	char 			**pics;
-	int 			*walltex;
-	int 			*walltex1;
-	int 			*walltex2;
+	int 			**walltex;
 
 }						t_wolf;
 
@@ -81,7 +81,7 @@ typedef struct			s_texture
 {
 	int				offx;
 	int 			offy;
-	unsigned int 	color;
+	int 	color;
 	float			ratio;
 	int				diago_distance;
 	float			endx;
