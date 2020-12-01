@@ -110,7 +110,7 @@ int			main(int ac, char **av)
 					wolf.p = 1;
 					wolf.i = 2;
 				}
-				else 
+				else
 					wolf.p = 0;
 				if ((x >= 835 && x <= 1131) && (y >= 603 && y <= 634) && wolf.o != 2 && wolf.i != 6 && wolf.i != 7)
 				{
@@ -149,7 +149,7 @@ int			main(int ac, char **av)
 				wolf.p = 0;
 				wolf.o = 0;
 				wolf.a = 0;
-				//wolf.m = 0;
+				wolf.m = 0;
 			}
 		}
 		else if (wolf.i == 5)
