@@ -19,29 +19,27 @@ SRC = main.c process_input.c rendering.c updating.c tools.c\
 		Get_Next_Line/libft/ft_atoi.c \
 		Get_Next_Line/get_next_line.c projection3d.c raycasting2.c
 
-FRAM =  -framework SDL2 -F ./SDL/ -framework SDL2_mixer -F ./SDL  -framework SDL2_image -F ./SDL -rpath @loader_path/SDL -lz
+OBJ = $(SRC:.c=.o)
 
-OBJ = $(SRC:.c=.o) 
+INC = -I SDL/SDL2.framework/Headers -I SDL/SDL2_mixer.framework/Headers -I SDL/SDL2_image.framework/Headers
 
-F_OBJ = ./OBJ
+LIB = -rpath @loader_path/SDL -lz
 
-all: $(NAME)
-%.o : %.c $(INC)
-	$(CC) $(CFLAGS)$(OBJ) $(LIB) $(FRAM) -o $(NAME) -c -o $@ $<
-$(NAME):$(OBJ)
-		@echo "\033[2;36m"
-		@$(CC) $(CFLAGS) $(OBJ) $(LIB) $(FRAM) -o $(NAME)
-		@echo "wolf3d_3D: executable file is ready"
-		@echo "\033[0m"
-clean:
-		@echo "\033[2;32m"
-		@rm -rf $(OBJ)   2> /dev/null || true
-		@echo "wolf3d_3D: all resources deleted"
-		@echo "\033[0m"
-fclean: clean 
-		@echo "\033[2;34m"
-		@rm -f $(NAME)  2> /dev/null || true
-		@echo "wolf3d_3D: executable file deleted"
-		@echo "\033[0m"
-		
-re: fclean all
+FRM = -framework SDL2 -F ./SDL/ -framework SDL2_mixer -framework SDL2_image -F ./SDL -framework OpenGl -framework Appkit
+
+CFLAGS = -Wall -Werror -Wextra $(INC)
+
+all : $(NAME)
+
+$(NAME) : $(OBJ)
+	@echo "\033[2;36m"
+	@$(CC) $(CFLAGS) $(LIB) $(FRM) $(OBJ) -o $(NAME)
+	@echo "wolf3d_3D: executable file is ready"
+	@echo "\033[0m"
+clean :
+	rm -f $(OBJ)
+
+fclean : clean
+	rm -f $(NAME)
+
+re : fclean all
