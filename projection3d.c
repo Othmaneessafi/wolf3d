@@ -111,9 +111,9 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 			if (wolf->t == 1)
 			{
 				if (rays[i].rayright)
-					color = wolf->walltex[1];
+					color = wolf->walltex[9];
 				else if (rays[i].rayleft)
-					color = wolf->walltex[3];
+					color = wolf->walltex[8];
 			}
 			wall.offx = (int)rays[i].wallhity % TILE_SIZE;
 		}
@@ -124,7 +124,7 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 				if (rays[i].rayup)
 					color = wolf->walltex[0];
 				else if (rays[i].raydown)
-					color = wolf->walltex[2];
+					color = wolf->walltex[1];
 			}
 			wall.offx = (int)rays[i].wallhitx % TILE_SIZE;
 		}
