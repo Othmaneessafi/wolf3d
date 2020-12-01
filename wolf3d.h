@@ -40,8 +40,7 @@
 # include <stdio.h>
 # include "SDL/SDL2.framework/Headers/SDL.h"
 # include "SDL/SDL2_image.framework/Headers/SDL_image.h"
-//# include "SDL2_mixer.framework/Headers/SDL_mixer.h"
-//# include "SDL2_mixer-2.0.4/SDL_mixer.h"
+# include "SDL/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
 # include <limits.h>
 # include <fcntl.h>
@@ -60,7 +59,13 @@ typedef struct			s_wolf
 	int				**map;
 	char 			**pics;
 	int 			**walltex;
-
+	Mix_Music 		*msc;
+	int i;
+	int p;
+	int o;
+	int a;
+	int m;
+	int t;
 }						t_wolf;
 
 typedef struct			s_player
@@ -129,6 +134,14 @@ typedef struct			s_projection
 
 }						t_projection;
 
+typedef struct			s_choose
+{
+	int	*flor;
+	int	*wall;
+	int	*ceiling;
+
+}						t_choose;
+
 int						init_window(t_wolf *wolf);
 void					destroy_window(t_wolf *wolf);
 void					process_input(t_wolf *wolf, t_player *player);
@@ -153,4 +166,7 @@ t_results				looping_ver_cast(t_cords intercept, t_cords step,
 void    imgs(t_wolf *wolf);
 void    tex2(t_wolf *wolf);
 void		convert_data_img(int *tab, int range);
+void	sounds(t_wolf *wolf);
+void background(t_wolf *wolf);
+t_choose	choose_tex(t_wolf *wolf);
 #endif
