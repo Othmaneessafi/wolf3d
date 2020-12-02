@@ -40,6 +40,7 @@ void		destroy_window(t_wolf *wolf)
 	free(wolf->colorbuffer);
 	SDL_DestroyRenderer(wolf->renderer);
 	SDL_DestroyWindow(wolf->window);
+	Mix_FreeMusic(wolf->msc);
 	SDL_Quit();
 }
 
@@ -165,11 +166,13 @@ void    tex2(t_wolf *wolf)
 
 }
 
-void	sounds(t_wolf *wolf)
+void	sounds(t_wolf *wolf, char *music)
 {
 	Mix_PauseMusic();
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
-	//wolf->msc = Mix_LoadMUS("sounds/hajib.mp3");
+	if (wolf->msc)
+		Mix_FreeMusic(wolf->msc);
+	wolf->msc = Mix_LoadMUS(music);
 	Mix_PlayMusic(wolf->msc, 1);
 }
 

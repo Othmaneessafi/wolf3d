@@ -41,8 +41,6 @@ void		process_input(t_wolf *wolf, t_player *player)
 	{
 		keyup_input(wolf, player, e);
 	}
-	// else if (e.type == SDL_MOUSEBUTTONDOWN)
-	// {
 		if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
 		{
 			if (wolf->i == 2 && wolf->p == 1)
@@ -61,29 +59,24 @@ void		process_input(t_wolf *wolf, t_player *player)
 			{
 				if (wolf->m == 1)
 				{
-					wolf->msc = Mix_LoadMUS("sounds/cave.mp3");
-					sounds(wolf);
+					sounds(wolf, "sounds/stranger.mp3");
 					wolf->i = 1;
 					wolf->t = 1;
 				}
 				if (wolf->m == 2)
 				{
-					wolf->msc = Mix_LoadMUS("sounds/momen.mp3");
-					sounds(wolf);
+					sounds(wolf, "sounds/momen.mp3");
 					wolf->i = 1;
 					wolf->t = 2;
 				}
 				if (wolf->m == 3)
 				{
-					wolf->msc = Mix_LoadMUS("sounds/hajib.mp3");
-					sounds(wolf);
+					sounds(wolf, "sounds/hajib.mp3");
 					wolf->i = 1;
 					wolf->t = 3;
 				}
-				//wolf->m = 4;
 			}
 		}
-	// }
 	else if (e.type == SDL_KEYUP)
 	{
 		if (e.key.keysym.sym == SDLK_w)

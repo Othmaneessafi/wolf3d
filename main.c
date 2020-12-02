@@ -26,6 +26,7 @@ void		init_wolf(t_wolf *wolf)
 	wolf->a = 0;
 	wolf->m = 0;
 	wolf->t = 1;
+	wolf->msc = NULL;
 }
 
 void		init_player(t_player *player, t_wolf *wolf)
@@ -81,13 +82,13 @@ int			main(int ac, char **av)
 	}
 	init_wolf(&wolf);
 	wolf.loop = init_window(&wolf);
-	wolf.msc = Mix_LoadMUS("sounds/hajib.mp3");
-	sounds(&wolf);
 	imgs(&wolf);
 	init_tab(rays);
 	tex2(&wolf);
 	init_player(&player, &wolf);
-	SDL_GetMouseState(&x, &y);
+	// wolf.msc = NULL;
+	//wolf.msc = Mix_LoadMUS("sounds/intro.mp3");
+	sounds(&wolf, "sounds/intro.mp3");
 	while (wolf.loop)
 	{
 		process_input(&wolf, &player);
@@ -102,9 +103,6 @@ int			main(int ac, char **av)
 			else
 			{
 				SDL_GetMouseState(&x, &y);
-				// printf("%d == %d\n", x, y);
-				// printf("%d\n", wolf.i);
-				// printf(" o == %d\n", wolf.o);
 				if ((x >= 835 && x <= 1222) && (y >= 529 && y <= 564) && wolf.i != 6 && wolf.i != 7)
 				{
 					wolf.p = 1;
