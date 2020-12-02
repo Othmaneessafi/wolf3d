@@ -166,7 +166,7 @@ t_results				looping_ver_cast(t_cords intercept, t_cords step,
 void    imgs(t_wolf *wolf);
 void    tex2(t_wolf *wolf);
 void		convert_data_img(int *tab, int range);
-void	sounds(t_wolf *wolf);
+void	sounds(t_wolf *wolf, char *music);
 void background(t_wolf *wolf);
 t_choose	choose_tex(t_wolf *wolf);
 #endif
