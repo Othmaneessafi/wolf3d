@@ -169,4 +169,6 @@ void		convert_data_img(int *tab, int range);
 void	sounds(t_wolf *wolf, char *music);
 void background(t_wolf *wolf);
 t_choose	choose_tex(t_wolf *wolf);
+void	ft_free_tab(char **tab);
+void	ft_free_int_tab(int **tab);
 #endif

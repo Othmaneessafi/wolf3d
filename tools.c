@@ -41,6 +41,8 @@ void		destroy_window(t_wolf *wolf)
 	SDL_DestroyRenderer(wolf->renderer);
 	SDL_DestroyWindow(wolf->window);
 	Mix_FreeMusic(wolf->msc);
+	//ft_free_tab(wolf->pics);
+	//ft_free_int_tab(wolf->walltex);
 	SDL_Quit();
 }
 
@@ -203,6 +205,7 @@ void background(t_wolf *wolf)
 		SDL_RenderClear(wolf->renderer);
 		SDL_RenderCopy(wolf->renderer, img, NULL, &tex);
 		SDL_RenderPresent(wolf->renderer);
+		SDL_DestroyTexture(img);
 }
 
 t_choose	choose_tex(t_wolf *wolf)
@@ -228,4 +231,46 @@ t_choose	choose_tex(t_wolf *wolf)
 	}
 	return (choose);
 	
+}
+
+void	ft_free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (tab[i])
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+		}
+		i++;
+	}
+	if (tab)
+	{
+		free(tab);
+		tab = NULL;
+	}
+}
+
+void	ft_free_int_tab(int **tab)
+{
+	int i;
+
+	i = 0;
+	while (i < 19)
+	{
+		if (tab[i])
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+		}
+		i++;
+	}
+	if (tab)
+	{
+		free(tab);
+		tab = NULL;
+	}
 }
