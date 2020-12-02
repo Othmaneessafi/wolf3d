@@ -74,6 +74,7 @@ void    imgs(t_wolf *wolf)
     wolf->pics[10] = ft_strdup("./pics/tile43.png");
     wolf->pics[11] = ft_strdup("./pics/green.png");
     wolf->pics[12] = ft_strdup("./pics/floortile.png");
+	
 }
 
 void    tex2(t_wolf *wolf)
