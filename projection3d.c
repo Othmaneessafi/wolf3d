@@ -73,12 +73,14 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 	t_texture	wall;
 	t_texture	flor;
 	t_texture   ceil;
+	t_choose	clr;	
 	int disFromTop;
-	int *color;
+	int *color = NULL;
 	int color1;
-	//float bright = 100/flor.diago_distance;
 
 	j = 0;
+	clr = choose_tex(wolf);
+		
 	while (j < walltopandbottom.x)
 	{
 		
@@ -95,12 +97,8 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 		{
 			ceil.tilerow = (int)ceil.endy % TILE_SIZE;
 			ceil.tilecol = (int)ceil.endx % TILE_SIZE;
-			//if (flor.cellx == 7 && flor.celly == 8)
-				//flor.color = wolf->walltex1[(TEX_W * flor.tilerow) + flor.tilecol];
-			//else
-			//printf("ok1\n");
 			double bright = HEIGHT / (2.0 * j - HEIGHT);
-			ceil.color = wolf->walltex[5][(TEX_W * ceil.tilerow) + ceil.tilecol];
+			ceil.color = clr.ceiling[(TEX_W * ceil.tilerow) + ceil.tilecol];
 			color1 = get_color(ceil.color, -1.0 * bright);
 			wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		}
@@ -108,34 +106,39 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 	}
 	double light;
 	j = walltopandbottom.x;
-	if (rays[i].hitver)
-	{
-		light = 180/rays[i].distance;
-		if (rays[i].rayright)
-			color = wolf->walltex[1];
-		else if (rays[i].rayleft)
-			color = wolf->walltex[3];
-        wall.offx = (int)rays[i].wallhity % TILE_SIZE;
-	}
-    else
-	{
-		light = 170/rays[i].distance;
-		if (rays[i].rayup)
-			color = wolf->walltex[0];
-		else if (rays[i].raydown)
-			color = wolf->walltex[2];
-		wall.offx = (int)rays[i].wallhitx % TILE_SIZE;
-	}
+		if (rays[i].hitver)
+		{
+			if (wolf->t == 1)
+			{
+				if (rays[i].rayright)
+					color = wolf->walltex[9];
+				else if (rays[i].rayleft)
+					color = wolf->walltex[8];
+			}
+			wall.offx = (int)rays[i].wallhity % TILE_SIZE;
+		}
+		else
+		{
+			if (wolf->t == 1)
+			{
+				if (rays[i].rayup)
+					color = wolf->walltex[0];
+				else if (rays[i].raydown)
+					color = wolf->walltex[1];
+			}
+			wall.offx = (int)rays[i].wallhitx % TILE_SIZE;
+		}
+	if (wolf->t != 1)
+		color = clr.wall;
+	light = 180/rays[i].distance;
 	if (light > 0.883948)
 		light = 0.883948;
-	//printf ("light %f\n", light);
 	while (j < walltopandbottom.y)
 	{
         disFromTop = j + ((int)proj->wallprojheight/2) - (HEIGHT / 2);
         wall.offy = disFromTop * ((float)TEX_H / proj->wallprojheight);
-		//double bright = HEIGHT / (2.0 * j - HEIGHT);
+		//printf("%d\n", wolf->t);
 		wall.color = color[(TEX_W * wall.offy) + wall.offx];
-		//printf("dist     %f\n", proj->perpdistance);
 		color1 = get_color2(wall.color, (light));
         wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		j++;
@@ -156,11 +159,8 @@ void		coloring(t_cords walltopandbottom, t_ray *rays, t_wolf *wolf, int i, t_pro
 		{
 			flor.tilerow = (int)flor.endy % TILE_SIZE;
 			flor.tilecol = (int)flor.endx % TILE_SIZE;
-			//if (flor.cellx == 7 && flor.celly == 8)
-				//flor.color = wolf->walltex1[(TEX_W * flor.tilerow) + flor.tilecol];
-			//else
 			double bright = HEIGHT / (2.0 * j - HEIGHT);
-			flor.color = wolf->walltex[4][(TEX_W * flor.tilerow) + flor.tilecol];// * bright;
+			flor.color = clr.flor[(TEX_W * flor.tilerow) + flor.tilecol];
 			color1 = get_color(flor.color, bright);
 			wolf->colorbuffer[(WIDTH * j) + i] = color1;
 		}
