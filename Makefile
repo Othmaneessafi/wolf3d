@@ -17,7 +17,8 @@ SRC = main.c process_input.c rendering.c updating.c tools.c\
 		Get_Next_Line/libft/ft_strnew.c \
 		Get_Next_Line/libft/ft_strlen.c \
 		Get_Next_Line/libft/ft_atoi.c \
-		Get_Next_Line/get_next_line.c projection3d.c raycasting2.c
+		Get_Next_Line/get_next_line.c projection3d.c raycasting2.c \
+		tools1.c tools2.c
 
 OBJ = $(SRC:.c=.o)
 

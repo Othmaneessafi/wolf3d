@@ -60,12 +60,12 @@ typedef struct			s_wolf
 	char 			**pics;
 	int 			**walltex;
 	Mix_Music 		*msc;
-	int i;
-	int p;
-	int o;
-	int a;
-	int m;
-	int t;
+	int				i;
+	int				p;
+	int				o;
+	int				a;
+	int				m;
+	int				t;
 }						t_wolf;
 
 typedef struct			s_player
@@ -153,7 +153,7 @@ float					normalizeangle(float angle);
 float					distancecalc(float x1, float y1, float x2, float y2);
 int						mapwall(int **map, float x, float y);
 void					castallrays(t_player *player, int **map, t_ray *ray);
-int						**ft_check(int ac, char **av);
+int						ft_check(char **av, t_wolf *wolf, int i, int j);
 void					clearcolorbuffer(int *buffer, int color);
 void					rendercolorbuffer(t_player *p, t_wolf *wolf);
 void					generate3dprojection(t_ray *rays, t_player *player,
@@ -164,11 +164,16 @@ t_results				looping_hor_cast(t_cords intercept, t_cords step,
 t_results				looping_ver_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
 void    imgs(t_wolf *wolf);
-void    tex2(t_wolf *wolf);
+void    textures(t_wolf *wolf);
 void		convert_data_img(int *tab, int range);
 void	sounds(t_wolf *wolf, char *music);
 void background(t_wolf *wolf);
 t_choose	choose_tex(t_wolf *wolf);
 void	ft_free_tab(char **tab);
 void	ft_free_int_tab(int **tab);
+void menu(t_wolf *wolf, t_player *player, t_ray *rays);
+void menu1(t_wolf *wolf, int x, int y);
+void menu2(t_wolf *wolf, int x, int y);
+void	input(t_wolf *wolf);
+void	input1(t_wolf *wolf);
 #endif
