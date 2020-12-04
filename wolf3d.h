@@ -95,6 +95,7 @@ typedef struct			s_texture
 	int				celly;
 	int				tilerow;
 	int				tilecol;
+	int				*color1;
 }						t_texture;
 
 typedef struct			s_ray
@@ -131,6 +132,8 @@ typedef struct			s_projection
 	float	perpdistance;
 	float	distprojplane;
 	float	wallprojheight;
+	int		i;
+	t_cords	walltopandbottom;
 
 }						t_projection;
 
@@ -163,17 +166,17 @@ t_results				looping_hor_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
 t_results				looping_ver_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
-void    imgs(t_wolf *wolf);
-void    textures(t_wolf *wolf);
-void		convert_data_img(int *tab, int range);
-void	sounds(t_wolf *wolf, char *music);
-void background(t_wolf *wolf);
-t_choose	choose_tex(t_wolf *wolf);
-void	ft_free_tab(char **tab);
-void	ft_free_int_tab(int **tab);
-void menu(t_wolf *wolf, t_player *player, t_ray *rays);
-void menu1(t_wolf *wolf, int x, int y);
-void menu2(t_wolf *wolf, int x, int y);
-void	input(t_wolf *wolf);
-void	input1(t_wolf *wolf);
+void    				imgs(t_wolf *wolf);
+void    				textures(t_wolf *wolf);
+void					convert_data_img(int *tab, int range);
+void					sounds(t_wolf *wolf, char *music);
+void 					background(t_wolf *wolf);
+t_choose				choose_tex(t_wolf *wolf);
+void					ft_free_tab(char **tab);
+void					ft_free_int_tab(int **tab);
+void 					menu(t_wolf *wolf, t_player *player, t_ray *rays);
+void 					menu1(t_wolf *wolf, int x, int y);
+void 					menu2(t_wolf *wolf, int x, int y);
+void					input(t_wolf *wolf);
+void					input1(t_wolf *wolf);
 #endif

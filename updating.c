@@ -40,7 +40,6 @@ void		playermove(int **map, float deltatime, t_player *player)
 	{
 		player->x = (float)newx;
 		player->y = (float)newy;
-		//printf("%f, %f\n", newx, newy);
 	}
 }
 

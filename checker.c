@@ -98,8 +98,8 @@ int		ft_check(char **av, t_wolf *wolf, int i, int j)
 			c = fcoln(line);
 			if (c == 0)
             {
-                free(line);
-                ft_free_tab(tmp);
+                //free(line);
+                //ft_free_tab(tmp);
 				return (0);
             }
 			else
@@ -117,8 +117,8 @@ int		ft_check(char **av, t_wolf *wolf, int i, int j)
 			}
 			i++;
 		}
-        free(line);
-        ft_free_tab(tmp);
+        //free(line);
+        //ft_free_tab(tmp);
 		return (1);
 	}
 	return (0);

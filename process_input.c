@@ -65,6 +65,7 @@ void		input(t_wolf *wolf)
 	}
 	else if (wolf->i == 4 && wolf->a == 1)
 	{
+		sounds(wolf, "sounds/mission.mp3");
 		wolf->i = 7;
 		wolf->a = 2;
 	}
@@ -76,7 +77,7 @@ void		input1(t_wolf *wolf)
 {
 	if (wolf->m == 1)
 	{
-		sounds(wolf, "sounds/mission.mp3");
+		sounds(wolf, "sounds/stranger.mp3");
 		wolf->i = 1;
 		wolf->t = 1;
 	}
