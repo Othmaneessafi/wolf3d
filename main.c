@@ -12,14 +12,18 @@
 
 #include "wolf3d.h"
 
-void		init_wolf(t_wolf *wolf)
+void		init_wolf(t_wolf *wolf, t_player *player)
 {
 	wolf->window = NULL;
 	wolf->renderer = NULL;
 	wolf->loop = 0;
 	wolf->tickslastframe = 0;
-	wolf->colorbuffer = (int *)malloc(sizeof(int)
-					* WIDTH * HEIGHT);
+	if ((wolf->colorbuffer = (int *)malloc(sizeof(int)
+					* WIDTH * HEIGHT)) == NULL)
+	{
+		destroy_window(wolf, player);
+		exit(0);
+	}
 	wolf->i = 0;
 	wolf->p = 0;
 	wolf->o = 0;
@@ -78,11 +82,11 @@ int			main(int ac, char **av)
 		printf("map is invalid !!!\n");
 		return (0);
 	}
-	init_wolf(&wolf);
+	init_wolf(&wolf, &player);
 	wolf.loop = init_window(&wolf);
-	imgs(&wolf);
+	imgs(&wolf, &player);
 	init_tab(rays);
-	textures(&wolf);
+	textures(&wolf, &player);
 	init_player(&player, &wolf);
 	sounds(&wolf, "sounds/intro.mp3");
 	while (wolf.loop)
@@ -90,5 +94,6 @@ int			main(int ac, char **av)
 		process_input(&wolf, &player);
 		menu(&wolf, &player, rays);
 	}
-	destroy_window(&wolf);
+	destroy_window(&wolf, &player);
 }
+

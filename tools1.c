@@ -40,9 +40,13 @@ float	distancecalc(float x1, float y1, float x2, float y2)
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
 
-void	imgs(t_wolf *wolf)
+void	imgs(t_wolf *wolf, t_player *player)
 {
-	wolf->pics = (char **)malloc(sizeof(char *) * 19);
+	if ((wolf->pics = (char **)malloc(sizeof(char *) * 20)) == NULL)
+	{
+		destroy_window(wolf, player);
+		exit(0);
+	}
 	wolf->pics[0] = ft_strdup("./images/mossystone.png");
 	wolf->pics[1] = ft_strdup("./images/colorstone.png");
 	wolf->pics[2] = ft_strdup("./images/play.png");
@@ -62,23 +66,31 @@ void	imgs(t_wolf *wolf)
 	wolf->pics[16] = ft_strdup("./images/is.png");
 	wolf->pics[17] = ft_strdup("./images/khayma1.png");
 	wolf->pics[18] = ft_strdup("./images/s9af1.png");
+	wolf->pics[19] = NULL;
 }
 
-void	textures(t_wolf *wolf)
+void	textures(t_wolf *wolf, t_player *player)
 {
 	int i;
 
 	i = 0;
-	if ((wolf->walltex = (int**)malloc(sizeof(int *) * 20)) == NULL)
+	if ((wolf->walltex = (int**)malloc(sizeof(int *) * 19)) == NULL)
+	{
+		destroy_window(wolf, player);
 		exit(0);
+	}
 	while (i < 19)
 	{
-		if ((wolf->walltex[i] = (int *)malloc(sizeof(int) *
-			(TEX_H * TEX_W))) == NULL)
+		if ((wolf->walltex[i] = (int *)malloc(sizeof(int))) == NULL)
+		{
+			destroy_window(wolf, player);
 			exit(0);
+		}
 		wolf->surface = IMG_Load(wolf->pics[i]);
 		wolf->walltex[i] = (int *)wolf->surface->pixels;
 		i++;
 	}
-	wolf->walltex[19] = NULL;
+	if (wolf->surface)
+		SDL_FreeSurface(wolf->surface);
+	wolf->walltex[i] = NULL;
 }

@@ -208,7 +208,11 @@ void		generate3dprojection(t_ray *rays, t_player *player, t_wolf *wolf)
 	t_projection	*proj;
 
 	i = 0;
-	proj = malloc(sizeof(t_projection));
+	if ((proj = malloc(sizeof(t_projection))) == NULL)
+	{
+		destroy_window(wolf, player);
+		exit(0);
+	}
 	while (i < NUM_RAY)
 	{
 		if (rays[i].distance == 0)
@@ -227,4 +231,5 @@ void		generate3dprojection(t_ray *rays, t_player *player, t_wolf *wolf)
 		coloring(rays, wolf, proj, player);
 		i++;
 	}
+	free(proj);
 }
