@@ -77,7 +77,7 @@ int			main(int ac, char **av)
 	t_player	player;
 	t_ray		rays[NUM_RAY];
 
-	if (ft_check(av, &wolf, 0, 0) == 0 || ac != 2)
+	if (ft_check(av, &wolf, 0) == 0 || ac != 2)
 	{
 		printf("map is invalid !!!\n");
 		return (0);

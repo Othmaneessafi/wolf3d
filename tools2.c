@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-void	ft_free_tab(char **tab)
+int	ft_free_tab(char **tab)
 {
 	int i;
 
@@ -31,6 +31,7 @@ void	ft_free_tab(char **tab)
 		free(tab);
 		tab = NULL;
 	}
+	return(1);
 }
 
 void	ft_free_int_tab(int **tab, int k)

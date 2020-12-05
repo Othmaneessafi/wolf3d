@@ -36,55 +36,43 @@ int		fcoln(char *line)
 		c++;
 	if (c != 20)
 		c = 0;
-	free(line);
+	ft_free_tab(tmp);
 	return (c);
 }
 
-int		check_line(char **av)
+int		check_line(char **av, int i)
 {
 	int		fd;
 	char	*line;
 	char	**tmp;
-	int		i;
 
-	i = 0;
 	fd = open(av[1], O_RDONLY);
-	if (get_next_line(fd, &line) == 1)
-	{
-		tmp = ft_split_whitespaces(line);
-		while (tmp[i])
-		{
+	if ((get_next_line(fd, &line) == 1) && (tmp = ft_split_whitespaces(line)))
+		while (tmp[++i])
 			if (ft_atoi(tmp[i]) == 0)
 				return (0);
-			i++;
-		}
-	}
 	while (get_next_line(fd, &line) == 1)
 		i++;
 	tmp = ft_split_whitespaces(line);
-	i = 0;
-	while (tmp[i])
-	{
+	i = -1;
+	while (tmp[++i])
 		if (ft_atoi(tmp[i]) == 0)
 		{
 			free(line);
 			ft_free_tab(tmp);
 			return (0);
 		}
-		i++;
-	}
 	free(line);
 	ft_free_tab(tmp);
 	close(fd);
 	return (1);
 }
 
-int		checker(t_wolf *wolf, char *line, int i, int j)
+int		checker(t_wolf *wolf, char *line, int i, int c)
 {
-	int		c;
+	int		j;
 	char	**tmp;
 
-	c = fcoln(line);
 	if (c == 0)
 	{
 		free(line);
@@ -98,31 +86,26 @@ int		checker(t_wolf *wolf, char *line, int i, int j)
 			exit(0);
 		}
 		tmp = ft_split_whitespaces(line);
-		if (ft_atoi(tmp[0]) == 0 || ft_atoi(tmp[c - 1]) == 0)
-		{
-			ft_free_tab(tmp);
+		if ((ft_atoi(tmp[0]) == 0 || ft_atoi(tmp[c - 1]) == 0) &&
+			(ft_free_tab(tmp)))
 			return (0);
-		}
-		j = 0;
-		while (j < c)
-		{
+		j = -1;
+		while (++j < c)
 			wolf->map[i][j] = ft_atoi(tmp[j]);
-			j++;
-		}
 	}
 	return (1);
 }
 
-int		ft_check(char **av, t_wolf *wolf, int i, int j)
+int		ft_check(char **av, t_wolf *wolf, int i)
 {
 	int		fd;
 	int		l;
 	char	*line;
+	int		c;
 
-	wolf->map = NULL;
 	fd = open(av[1], O_RDONLY);
 	l = flines(fd);
-	if ((l != 13) || (check_line(av)) == 0)
+	if ((l != 13) || (check_line(av, -1)) == 0)
 		return (0);
 	else
 	{
@@ -131,7 +114,8 @@ int		ft_check(char **av, t_wolf *wolf, int i, int j)
 			exit(0);
 		while (get_next_line(fd, &line) == 1)
 		{
-			if (!(checker(wolf, line, i, j)))
+			c = fcoln(line);
+			if (!(checker(wolf, line, i, c)))
 				return (0);
 			i++;
 		}
