@@ -35,17 +35,17 @@ void	ft_free_tab(char **tab)
 
 void	ft_free_int_tab(int **tab, int k)
 {
-	 int i;
+	int i;
 
 	i = 0;
 	while (tab[i])
 	{
 		if (tab[i])
 		{
-			if(k)
+			if (k)
 				free(tab[i]);
 			tab[i] = NULL;
-		i++;
+			i++;
 		}
 	}
 	if (tab)
@@ -72,7 +72,7 @@ void	destroy_window(t_wolf *wolf, t_player *player)
 	if (wolf->pics)
 		ft_free_tab(wolf->pics);
 	if (wolf->map)
-	 	ft_free_int_tab(wolf->map, 1);
+		ft_free_int_tab(wolf->map, 1);
 	if (wolf->walltex)
 		ft_free_int_tab(wolf->walltex, 0);
 	if (wolf->renderer)

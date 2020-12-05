@@ -68,13 +68,13 @@ int		check_line(char **av)
 		if (ft_atoi(tmp[i]) == 0)
 		{
 			free(line);
-    		ft_free_tab(tmp);
+			ft_free_tab(tmp);
 			return (0);
 		}
 		i++;
 	}
 	free(line);
-    ft_free_tab(tmp);
+	ft_free_tab(tmp);
 	close(fd);
 	return (1);
 }
@@ -96,16 +96,16 @@ int		ft_check(char **av, t_wolf *wolf, int i, int j)
 	else
 	{
 		fd = open(av[1], O_RDONLY);
-		if ((wolf->map = malloc((l + 1 )* sizeof(int *))) == NULL)
+		if ((wolf->map = malloc((l + 1) * sizeof(int *))) == NULL)
 			exit(0);
 		while (get_next_line(fd, &line) == 1)
 		{
 			c = fcoln(line);
 			if (c == 0)
-            {
-                free(line);
+			{
+				free(line);
 				return (0);
-            }
+			}
 			else
 			{
 				if ((wolf->map[i] = malloc(sizeof(int) * c)) == NULL)
