@@ -79,15 +79,46 @@ int		check_line(char **av)
 	return (1);
 }
 
+int		checker(t_wolf *wolf, char *line, int i, int j)
+{
+	int		c;
+	char	**tmp;
+
+	c = fcoln(line);
+	if (c == 0)
+	{
+		free(line);
+		return (0);
+	}
+	else
+	{
+		if ((wolf->map[i] = malloc(sizeof(int) * c)) == NULL)
+		{
+			free(line);
+			exit(0);
+		}
+		tmp = ft_split_whitespaces(line);
+		if (ft_atoi(tmp[0]) == 0 || ft_atoi(tmp[c - 1]) == 0)
+		{
+			ft_free_tab(tmp);
+			return (0);
+		}
+		j = 0;
+		while (j < c)
+		{
+			wolf->map[i][j] = ft_atoi(tmp[j]);
+			j++;
+		}
+	}
+	return (1);
+}
+
 int		ft_check(char **av, t_wolf *wolf, int i, int j)
 {
-	char	**tmp;
 	int		fd;
 	int		l;
-	int		c;
 	char	*line;
 
-	c = 0;
 	wolf->map = NULL;
 	fd = open(av[1], O_RDONLY);
 	l = flines(fd);
@@ -100,33 +131,8 @@ int		ft_check(char **av, t_wolf *wolf, int i, int j)
 			exit(0);
 		while (get_next_line(fd, &line) == 1)
 		{
-			c = fcoln(line);
-			if (c == 0)
-			{
-				free(line);
+			if (!(checker(wolf, line, i, j)))
 				return (0);
-			}
-			else
-			{
-				if ((wolf->map[i] = malloc(sizeof(int) * c)) == NULL)
-				{
-					free(line);
-					exit(0);
-				}
-				tmp = ft_split_whitespaces(line);
-				if (ft_atoi(tmp[0]) == 0 || ft_atoi(tmp[c - 1]) == 0)
-				{
-					free(line);
-					ft_free_tab(tmp);
-					return (0);
-				}
-				j = 0;
-				while (j < c)
-				{
-					wolf->map[i][j] = ft_atoi(tmp[j]);
-					j++;
-				}
-			}
 			i++;
 		}
 		wolf->map[i] = NULL;

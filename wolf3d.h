@@ -175,6 +175,7 @@ t_choose				choose_tex(t_wolf *wolf);
 void					ft_free_tab(char **tab);
 void					ft_free_int_tab(int **tab, int k);
 void 					menu(t_wolf *wolf, t_player *player, t_ray *rays);
+void 					menu0(t_wolf *wolf, int x, int y);
 void 					menu1(t_wolf *wolf, int x, int y);
 void 					menu2(t_wolf *wolf, int x, int y);
 void					input(t_wolf *wolf);

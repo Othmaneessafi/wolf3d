@@ -41,30 +41,6 @@ void		background(t_wolf *wolf)
 	SDL_DestroyTexture(img);
 }
 
-t_choose	choose_tex(t_wolf *wolf)
-{
-	t_choose choose;
-
-	if (wolf->t == 1)
-	{
-		choose.flor = wolf->walltex[4];
-		choose.ceiling = wolf->walltex[13];
-	}
-	if (wolf->t == 2)
-	{
-		choose.flor = wolf->walltex[12];
-		choose.ceiling = wolf->walltex[15];
-		choose.wall = wolf->walltex[14];
-	}
-	if (wolf->t == 3)
-	{
-		choose.flor = wolf->walltex[16];
-		choose.ceiling = wolf->walltex[18];
-		choose.wall = wolf->walltex[17];
-	}
-	return (choose);
-}
-
 void		menu(t_wolf *wolf, t_player *player, t_ray *rays)
 {
 	int x;
@@ -76,28 +52,33 @@ void		menu(t_wolf *wolf, t_player *player, t_ray *rays)
 	if (wolf->i == 0 || wolf->i == 1 || wolf->i == 2 || wolf->i == 3 ||
 			wolf->i == 4 || wolf->i == 6 || wolf->i == 7)
 	{
-		background(wolf);
-		if (wolf->i == 0)
-		{
-			SDL_Delay(3000);
-			wolf->i = 1;
-		}
-		else
-			menu1(wolf, x, y);
-		if (wolf->i == 6)
-			menu2(wolf, x, y);
-		if (wolf->i == 1)
-		{
-			wolf->p = 0;
-			wolf->o = 0;
-			wolf->a = 0;
-			wolf->m = 0;
-		}
+		menu0(wolf, x, y);
 	}
 	else if (wolf->i == 5)
 	{
 		update(wolf->map, &wolf->tickslastframe, player, rays);
 		render(wolf, player, wolf->map, rays);
+	}
+}
+
+void		menu0(t_wolf *wolf, int x, int y)
+{
+	background(wolf);
+	if (wolf->i == 0)
+	{
+		SDL_Delay(3000);
+		wolf->i = 1;
+	}
+	else
+		menu1(wolf, x, y);
+	if (wolf->i == 6)
+		menu2(wolf, x, y);
+	if (wolf->i == 1)
+	{
+		wolf->p = 0;
+		wolf->o = 0;
+		wolf->a = 0;
+		wolf->m = 0;
 	}
 }
 

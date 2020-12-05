@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-int		init_window(t_wolf *wolf)
+int			init_window(t_wolf *wolf)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
@@ -35,12 +35,12 @@ int		init_window(t_wolf *wolf)
 	return (TRUE);
 }
 
-float	distancecalc(float x1, float y1, float x2, float y2)
+float		distancecalc(float x1, float y1, float x2, float y2)
 {
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
 
-void	imgs(t_wolf *wolf, t_player *player)
+void		imgs(t_wolf *wolf, t_player *player)
 {
 	if ((wolf->pics = (char **)malloc(sizeof(char *) * 20)) == NULL)
 	{
@@ -69,7 +69,7 @@ void	imgs(t_wolf *wolf, t_player *player)
 	wolf->pics[19] = NULL;
 }
 
-void	textures(t_wolf *wolf, t_player *player)
+void		textures(t_wolf *wolf, t_player *player)
 {
 	int i;
 
@@ -90,7 +90,29 @@ void	textures(t_wolf *wolf, t_player *player)
 		wolf->walltex[i] = (int *)wolf->surface->pixels;
 		i++;
 	}
-	if (wolf->surface)
-		SDL_FreeSurface(wolf->surface);
 	wolf->walltex[i] = NULL;
+}
+
+t_choose	choose_tex(t_wolf *wolf)
+{
+	t_choose choose;
+
+	if (wolf->t == 1)
+	{
+		choose.flor = wolf->walltex[4];
+		choose.ceiling = wolf->walltex[13];
+	}
+	if (wolf->t == 2)
+	{
+		choose.flor = wolf->walltex[12];
+		choose.ceiling = wolf->walltex[15];
+		choose.wall = wolf->walltex[14];
+	}
+	if (wolf->t == 3)
+	{
+		choose.flor = wolf->walltex[16];
+		choose.ceiling = wolf->walltex[18];
+		choose.wall = wolf->walltex[17];
+	}
+	return (choose);
 }
