@@ -2,7 +2,7 @@ NAME = wolf
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -pie
 
 SDLF = -I SDL/SDL2.framework/Headers   
 

@@ -47,12 +47,25 @@
 # include "Get_Next_Line/get_next_line.h"
 # include "Get_Next_Line/libft/libft.h"
 
+typedef struct			s_player
+{
+	float				x;
+	float				y;
+	float			width;
+	float			height;
+	int				turndirection;
+	int				walkdirection;
+	float			rotatangle;
+	float			walkspeed;
+	float			turnspeed;
+	SDL_Texture		*colorbuffertexture;
+}						t_player;
+
 typedef struct			s_wolf
 {
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
 	SDL_Surface     *surface;
-	SDL_Texture     *text;
 	int				loop;
 	float			tickslastframe;
 	int				*colorbuffer;
@@ -68,19 +81,6 @@ typedef struct			s_wolf
 	int				t;
 }						t_wolf;
 
-typedef struct			s_player
-{
-	float				x;
-	float				y;
-	float			width;
-	float			height;
-	int				turndirection;
-	int				walkdirection;
-	float			rotatangle;
-	float			walkspeed;
-	float			turnspeed;
-	SDL_Texture		*colorbuffertexture;
-}						t_player;
 
 typedef struct			s_texture
 {
@@ -146,7 +146,7 @@ typedef struct			s_choose
 }						t_choose;
 
 int						init_window(t_wolf *wolf);
-void					destroy_window(t_wolf *wolf);
+void					destroy_window(t_wolf *wolf, t_player *player);
 void					process_input(t_wolf *wolf, t_player *player);
 void					render(t_wolf *wolf, t_player *player, int **map,
 		t_ray *rays);
@@ -166,14 +166,14 @@ t_results				looping_hor_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
 t_results				looping_ver_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
-void    				imgs(t_wolf *wolf);
-void    				textures(t_wolf *wolf);
+void    				imgs(t_wolf *wolf, t_player *player);
+void					textures(t_wolf *wolf, t_player *player);
 void					convert_data_img(int *tab, int range);
 void					sounds(t_wolf *wolf, char *music);
 void 					background(t_wolf *wolf);
 t_choose				choose_tex(t_wolf *wolf);
 void					ft_free_tab(char **tab);
-void					ft_free_int_tab(int **tab);
+void					ft_free_int_tab(int **tab, int k);
 void 					menu(t_wolf *wolf, t_player *player, t_ray *rays);
 void 					menu1(t_wolf *wolf, int x, int y);
 void 					menu2(t_wolf *wolf, int x, int y);

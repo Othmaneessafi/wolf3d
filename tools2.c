@@ -33,19 +33,20 @@ void	ft_free_tab(char **tab)
 	}
 }
 
-void	ft_free_int_tab(int **tab)
+void	ft_free_int_tab(int **tab, int k)
 {
-	int i;
+	 int i;
 
 	i = 0;
-	while (i < 19)
+	while (tab[i])
 	{
 		if (tab[i])
 		{
-			free(tab[i]);
+			if(k)
+				free(tab[i]);
 			tab[i] = NULL;
-		}
 		i++;
+		}
 	}
 	if (tab)
 	{
@@ -64,12 +65,24 @@ void	sounds(t_wolf *wolf, char *music)
 	Mix_PlayMusic(wolf->msc, 1);
 }
 
-void	destroy_window(t_wolf *wolf)
+void	destroy_window(t_wolf *wolf, t_player *player)
 {
-	free(wolf->colorbuffer);
-	SDL_DestroyRenderer(wolf->renderer);
-	SDL_DestroyWindow(wolf->window);
-	Mix_FreeMusic(wolf->msc);
+	if (wolf->colorbuffer)
+		free(wolf->colorbuffer);
+	if (wolf->pics)
+		ft_free_tab(wolf->pics);
+	if (wolf->map)
+	 	ft_free_int_tab(wolf->map, 1);
+	if (wolf->walltex)
+		ft_free_int_tab(wolf->walltex, 0);
+	if (wolf->renderer)
+		SDL_DestroyRenderer(wolf->renderer);
+	if (wolf->window)
+		SDL_DestroyWindow(wolf->window);
+	if (player->colorbuffertexture)
+		SDL_DestroyTexture(player->colorbuffertexture);
+	if (wolf->msc)
+		Mix_FreeMusic(wolf->msc);
 	SDL_Quit();
 }
 
