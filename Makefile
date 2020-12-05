@@ -1,4 +1,4 @@
-NAME = wolf
+NAME = wolf3d
 
 CC = gcc
 
