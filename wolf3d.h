@@ -6,7 +6,7 @@
 /*   By: cnaour <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 22:11:30 by cnaour            #+#    #+#             */
-/*   Updated: 2020/10/18 22:39:12 by cnaour           ###   ########.fr       */
+/*   Updated: 2020/12/05 04:15:29 by cnaour           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,12 @@ typedef struct			s_choose
 
 }						t_choose;
 
+void                    clearcolorbuffer(int *buffer, int color);
+void                    rendercolorbuffer(t_player *p, t_wolf *wolf);
+int                     get_color(int color, double dist);
+int                     get_color2(int color, double dist);
+t_texture               coloringwalls(t_wolf *wolf, t_ray *rays, t_projection *proj);
+
 int						init_window(t_wolf *wolf);
 void					destroy_window(t_wolf *wolf, t_player *player);
 void					process_input(t_wolf *wolf, t_player *player);
@@ -160,7 +166,7 @@ int						ft_check(char **av, t_wolf *wolf, int i);
 void					clearcolorbuffer(int *buffer, int color);
 void					rendercolorbuffer(t_player *p, t_wolf *wolf);
 void					generate3dprojection(t_ray *rays, t_player *player,
-		t_wolf *wolf);
+		t_wolf *wolf, int i);
 void					init_raycasting_results(t_results *res);
 t_results				looping_hor_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);

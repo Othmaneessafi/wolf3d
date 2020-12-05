@@ -6,7 +6,7 @@
 /*   By: cnaour <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 04:50:13 by cnaour            #+#    #+#             */
-/*   Updated: 2020/10/18 04:55:54 by cnaour           ###   ########.fr       */
+/*   Updated: 2020/12/05 04:14:10 by cnaour           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		render(t_wolf *wolf, t_player *player, int **map, t_ray *rays)
 {
 	SDL_SetRenderDrawColor(wolf->renderer, 0, 0, 0, 255);
 	SDL_RenderClear(wolf->renderer);
-	generate3dprojection(rays, player, wolf);
+	generate3dprojection(rays, player, wolf, -1);
 	rendercolorbuffer(player, wolf);
 	clearcolorbuffer(wolf->colorbuffer, 0xFF000000);
 	rendermap(map, wolf);

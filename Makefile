@@ -10,7 +10,7 @@ INC = wolft3d.h
 
 SRC = main.c process_input.c rendering.c updating.c tools.c\
 		raycasting.c checker.c Get_Next_Line/libft/ft_split_whitespaces.c \
-		Get_Next_Line/libft/ft_strdup.c \
+		Get_Next_Line/libft/ft_strdup.c projection3d1.c\
 		Get_Next_Line/libft/ft_strchr.c \
 		Get_Next_Line/libft/ft_strdel.c \
 		Get_Next_Line/libft/ft_strjoin.c \
