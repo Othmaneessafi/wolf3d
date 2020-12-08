@@ -30,8 +30,8 @@ void	ceilingcast(t_projection *proj, t_wolf *wolf, t_ray *rays, t_player *p)
 		ceil.endy = floor(ceil.diago_distance * sin(rays[proj->i].rayangle));
 		ceil.endy += p->y;
 		ceil.endx += p->x;
-		ceil.cellx = floor(ceil.endx / TILE_SIZE);
-		ceil.celly = floor(ceil.endy / TILE_SIZE);
+		//ceil.cellx = floor(ceil.endx / TILE_SIZE);
+		//ceil.celly = floor(ceil.endy / TILE_SIZE);
 		ceil.tilerow = (int)ceil.endy % TILE_SIZE;
 		ceil.tilecol = (int)ceil.endx % TILE_SIZE;
 		bright = HEIGHT / (2.0 * j - HEIGHT);
@@ -59,8 +59,8 @@ void	floorcast(t_projection *proj, t_wolf *wolf, t_ray *rays, t_player *p)
 		flor.endx = floor(flor.diago_distance * cos(rays[proj->i].rayangle));
 		flor.endy += p->y;
 		flor.endx += p->x;
-		flor.cellx = floor(flor.endx / TILE_SIZE);
-		flor.celly = floor(flor.endy / TILE_SIZE);
+		//flor.cellx = floor(flor.endx / TILE_SIZE);
+		//flor.celly = floor(flor.endy / TILE_SIZE);
 		flor.tilerow = (int)flor.endy % TILE_SIZE;
 		flor.tilecol = (int)flor.endx % TILE_SIZE;
 		bright = HEIGHT / (2.0 * j - HEIGHT);

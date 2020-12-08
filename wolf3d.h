@@ -6,7 +6,7 @@
 /*   By: cnaour <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 22:11:30 by cnaour            #+#    #+#             */
-/*   Updated: 2020/12/05 04:15:29 by cnaour           ###   ########.fr       */
+/*   Updated: 2020/12/08 05:53:48 by cnaour           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define TEX_W 64
 # define CENTERY HEIGHT / 2
 
-
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -49,8 +48,8 @@
 
 typedef struct			s_player
 {
-	float				x;
-	float				y;
+	float			x;
+	float			y;
 	float			width;
 	float			height;
 	int				turndirection;
@@ -65,14 +64,14 @@ typedef struct			s_wolf
 {
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
-	SDL_Surface     *surface;
+	SDL_Surface		*surface;
 	int				loop;
 	float			tickslastframe;
 	int				*colorbuffer;
 	int				**map;
-	char 			**pics;
-	int 			**walltex;
-	Mix_Music 		*msc;
+	char			**pics;
+	int				**walltex;
+	Mix_Music		*msc;
 	int				i;
 	int				p;
 	int				o;
@@ -81,18 +80,17 @@ typedef struct			s_wolf
 	int				t;
 }						t_wolf;
 
-
 typedef struct			s_texture
 {
 	int				offx;
-	int 			offy;
-	int 	color;
+	int				offy;
+	int				color;
 	float			ratio;
 	int				diago_distance;
 	float			endx;
 	float			endy;
-	int				cellx;
-	int				celly;
+	//int				cellx;
+	//int				celly;
 	int				tilerow;
 	int				tilecol;
 	int				*color1;
@@ -145,12 +143,12 @@ typedef struct			s_choose
 
 }						t_choose;
 
-void                    clearcolorbuffer(int *buffer, int color);
-void                    rendercolorbuffer(t_player *p, t_wolf *wolf);
-int                     get_color(int color, double dist);
-int                     get_color2(int color, double dist);
-t_texture               coloringwalls(t_wolf *wolf, t_ray *rays, t_projection *proj);
-
+void					clearcolorbuffer(int *buffer, int color);
+void					rendercolorbuffer(t_player *p, t_wolf *wolf);
+int						get_color(int color, double dist);
+int						get_color2(int color, double dist);
+t_texture				coloringwalls(t_wolf *wolf, t_ray *rays,
+		t_projection *proj);
 int						init_window(t_wolf *wolf);
 void					destroy_window(t_wolf *wolf, t_player *player);
 void					process_input(t_wolf *wolf, t_player *player);
@@ -172,18 +170,18 @@ t_results				looping_hor_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
 t_results				looping_ver_cast(t_cords intercept, t_cords step,
 		t_ray *ray, int **map);
-void    				imgs(t_wolf *wolf, t_player *player);
+void					imgs(t_wolf *wolf, t_player *player);
 void					textures(t_wolf *wolf, t_player *player);
 void					convert_data_img(int *tab, int range);
 void					sounds(t_wolf *wolf, char *music);
-void 					background(t_wolf *wolf);
+void					background(t_wolf *wolf);
 t_choose				choose_tex(t_wolf *wolf);
 int						ft_free_tab(char **tab);
 void					ft_free_int_tab(int **tab, int k);
-void 					menu(t_wolf *wolf, t_player *player, t_ray *rays);
-void 					menu0(t_wolf *wolf, int x, int y);
-void 					menu1(t_wolf *wolf, int x, int y);
-void 					menu2(t_wolf *wolf, int x, int y);
+void					menu(t_wolf *wolf, t_player *player, t_ray *rays);
+void					menu0(t_wolf *wolf, int x, int y);
+void					menu1(t_wolf *wolf, int x, int y);
+void					menu2(t_wolf *wolf, int x, int y);
 void					input(t_wolf *wolf);
 void					input1(t_wolf *wolf);
 #endif
