@@ -35,8 +35,8 @@ void		init_wolf(t_wolf *wolf, t_player *player)
 
 void		init_player(t_player *player, t_wolf *wolf)
 {
-	player->x = WIDTH / 2;
-	player->y = HEIGHT / 2;
+	player->x = 64 * 2;
+	player->y = 64 * 2;
 	player->width = 2;
 	player->height = 32;
 	player->turndirection = 0;

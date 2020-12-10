@@ -71,7 +71,7 @@ int		check_line(char **av, int i)
 int		checker(t_wolf *wolf, char *line, int i, int c)
 {
 	int		j;
-	char	**tmp;
+	char	**t;
 
 	if (c == 0)
 	{
@@ -85,13 +85,14 @@ int		checker(t_wolf *wolf, char *line, int i, int c)
 			free(line);
 			exit(0);
 		}
-		tmp = ft_split_whitespaces(line);
-		if ((ft_atoi(tmp[0]) == 0 || ft_atoi(tmp[c - 1]) == 0) &&
-			(ft_free_tab(tmp)))
+		t = ft_split_whitespaces(line);
+		if ((ft_atoi(t[0]) == 0 || ft_atoi(t[c - 1]) == 0 || ((i == 1 &&
+		((ft_atoi(t[1]) != 0) || (ft_atoi(t[2]) != 0))) || ((i == 2 &&
+		((ft_atoi(t[1]) != 0) || (ft_atoi(t[2]) != 0)))))) && (ft_free_tab(t)))
 			return (0);
 		j = -1;
 		while (++j < c)
-			wolf->map[i][j] = ft_atoi(tmp[j]);
+			wolf->map[i][j] = ft_atoi(t[j]);
 	}
 	return (1);
 }

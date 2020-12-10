@@ -20,17 +20,17 @@
 # define TILE_SIZE 64
 # define ROWS 13
 # define COLS 20
-# define FOVA (60 * (PI / 180))
-# define WIDTH (COLS * TILE_SIZE)
-# define HEIGHT (ROWS * TILE_SIZE)
+# define FOVA 1.0471975512
+# define WIDTH 1280
+# define HEIGHT 832
 # define FPS 30
-# define FRAME_TIME (1000/FPS)
+# define FRAME_TIME 33.333
 # define WALL_STRIP_WIDTH 1
-# define NUM_RAY WIDTH / WALL_STRIP_WIDTH
+# define NUM_RAY 1280
 # define MM_SCALE 0.2
 # define TEX_H 64
 # define TEX_W 64
-# define CENTERY HEIGHT / 2
+# define CENTERY 416
 
 # include <math.h>
 # include <unistd.h>
@@ -89,8 +89,6 @@ typedef struct			s_texture
 	int				diago_distance;
 	float			endx;
 	float			endy;
-	//int				cellx;
-	//int				celly;
 	int				tilerow;
 	int				tilecol;
 	int				*color1;
