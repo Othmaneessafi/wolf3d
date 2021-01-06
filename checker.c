@@ -21,7 +21,8 @@ int		flines(int fd)
 	while (get_next_line(fd, &line) == 1)
 		c++;
 	close(fd);
-	free(line);
+	if (line != NULL)
+		free(line);
 	return (c);
 }
 
