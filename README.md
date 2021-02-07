@@ -7,6 +7,51 @@ undoubtedly a genius. He was one of the first programmers to think about these a
 available on the internet, you will use mathematics as a tool to create elegant and efficient
 algorithms.
 
+#### *SDL2*
+
+__*Ubuntu:*__
+
+```bash
+sudo apt-get install libsdl2-dev libsdl2-mixer-dev libsdl2-ttf-dev
+```
+
+__*Fedora:*__
+
+```bash
+sudo dnf install SDL2-devel SDL2_mixer-devel SDL2_ttf-devel
+```
+
+__*MacOS:*__
+
+All ready for use. Just type **make**.
+
+__*Windows:*__
+
+- [MinGW](http://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php).
+- [Visual Studio](http://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/msvsnet2010u/index.php).
+
+## Compiling
+
+Use [make](https://en.wikipedia.org/wiki/Makefile) for compiling all files.
+
+When you have already installed SDL2 library you can use this simple rules:
+- **make**: Compile all.
+- **make clean**: Delete temporary files.
+- **make del**: Delete temporary Wolf3D files only(if you changed code use `make del && make` for re-compile only Wolf3D executable without libft).
+- **make fclean**: Delete executable Wolf3D file & libft.
+- **make re**: It's rules - **make fclean** & **make** in one.
+
+## Usage:
+
+```bash
+./wolf3d maps/map_name.w3d
+```
+
+- `[W | S]`: Moving forward | backward.
+- `[A | D]`: Rotate left | right.
+- `[Space]`: Return to the menu page.
+- `[ESC]`: Close Wolf3D.
+
 # Intro page
 <img width="1285" alt="Screen Shot 2021-02-06 at 5 49 08 PM" src="https://user-images.githubusercontent.com/44867969/107149413-bc2c7200-6958-11eb-9bf2-8b08d8db2c5b.png">
 
