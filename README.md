@@ -40,14 +40,13 @@ Use [make](https://en.wikipedia.org/wiki/Makefile) for compiling all files.
 When you have already installed SDL2 library you can use this simple rules:
 - **make**: Compile all.
 - **make clean**: Delete temporary files.
-- **make del**: Delete temporary Wolf3D files only(if you changed code use `make del && make` for re-compile only Wolf3D executable without libft).
 - **make fclean**: Delete executable Wolf3D file & libft.
 - **make re**: It's rules - **make fclean** & **make** in one.
 
 ## Usage:
 
 ```bash
-./wolf3d maps/map_name.w3d
+./wolf3d maps/night.wol
 ```
 
 - `[W | S]`: Moving forward | backward.
@@ -75,3 +74,9 @@ When you have already installed SDL2 library you can use this simple rules:
 # Moroccan cha3bi mode
 <img width="1283" alt="Screen Shot 2021-02-06 at 5 48 11 PM" src="https://user-images.githubusercontent.com/44867969/107149427-d403f600-6958-11eb-9175-692ee4163e11.png">
 <img width="1283" alt="Screen Shot 2021-02-06 at 5 48 24 PM" src="https://user-images.githubusercontent.com/44867969/107149430-d5cdb980-6958-11eb-9210-25fefc294181.png">
+
+__*Author:*__
+
+```bash
+Othmane Es-safi and Chadi Naour
+```
