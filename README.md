@@ -7,7 +7,10 @@ undoubtedly a genius. He was one of the first programmers to think about these a
 available on the internet, you will use mathematics as a tool to create elegant and efficient
 algorithms.
 
-#### *SDL2*
+#### *How to install SDL2*
+
+The SDL2 framework folder is already in this repo.
+But if didn't work for you, you can install the SDL2 library in you machine.
 
 __*Ubuntu:*__
 
