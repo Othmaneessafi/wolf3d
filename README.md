@@ -1,7 +1,5 @@
 # wolf3d
 
-# Objectives
-
 As a graphic design project, Wolf3D will enable you to solidify your skills in this area:
 windows, colors, events, fill shapes etc.
 To conclude Wolf3D is a remarkable playground to explore the playful practical applications of mathematics without having to understand the specifics. John Carmack is
