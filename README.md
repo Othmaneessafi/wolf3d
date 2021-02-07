@@ -75,7 +75,7 @@ When you have already installed SDL2 library you can use this simple rules:
 <img width="1283" alt="Screen Shot 2021-02-06 at 5 48 11 PM" src="https://user-images.githubusercontent.com/44867969/107149427-d403f600-6958-11eb-9175-692ee4163e11.png">
 <img width="1283" alt="Screen Shot 2021-02-06 at 5 48 24 PM" src="https://user-images.githubusercontent.com/44867969/107149430-d5cdb980-6958-11eb-9210-25fefc294181.png">
 
-__*Author:*__
+__*Authors:*__
 
 ```bash
 Othmane Es-safi and Chadi Naour
