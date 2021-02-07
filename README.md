@@ -5,12 +5,12 @@ windows, colors, events, fill shapes etc.
 To conclude Wolf3D is a remarkable playground to explore the playful practical applications of mathematics without having to understand the specifics. John Carmack is
 undoubtedly a genius. He was one of the first programmers to think about these applications and remains famous for them today. With the help of the numerous documents
 available on the internet, you will use mathematics as a tool to create elegant and efficient
-algorithms.
+algorithms. There's multiple sounds effects and light shading so the game look realistic.
 
 #### *How to install SDL2*
 
 The SDL2 framework folder is already in this repo.
-But if didn't work for you, you can install the SDL2 library in you machine.
+But if it didn't work for you, you can install the SDL2 library in you machine.
 
 __*Ubuntu:*__
 
